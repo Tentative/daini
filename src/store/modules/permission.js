@@ -4,7 +4,7 @@ import guestRoutes from '../../router/guestRoutes';
 
 const roleMap = {
 	guest: 0,
-	authenticated: 1,
+	root: 1,
 };
 
 

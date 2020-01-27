@@ -15,7 +15,7 @@ export default {
   components: { SidebarActivator },
   methods: {
     login() {
-      this.$store.commit("switchRole", "authenticated");
+      this.$store.commit("switchRole", "root");
     },
     logout() {
       this.$store.commit("switchRole", "guest");
