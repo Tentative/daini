@@ -10,7 +10,7 @@ const fullRoutes = [
 			tip: () => import('@/views/common/Home/tip')
 		},
 		meta: {
-			icon: 'home'
+			icon: 'user'
 		}
 	},
 	{

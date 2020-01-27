@@ -7,11 +7,6 @@ const roleMap = {
 	authenticated: 1,
 };
 
-const isAuth = {
-	state: {
-		count: 0
-	}
-};
 
 const permission = {
 	state: {
