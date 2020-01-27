@@ -20,8 +20,7 @@ const fullRoutes = [
 			default: () => import('@/views/common/Home/login'),
 		},
 		meta: {
-			icon: 'earth',
-			role: 'root'
+			icon: 'earth'
 		}
 	},
 	{
@@ -64,8 +63,7 @@ const fullRoutes = [
 		},
 		meta: {
 			icon: 'earth',
-			sideName: 'play',
-			role: 'root'
+			sideName: 'play'
 		}
 	},
 	...dynamicRoutes,
@@ -78,7 +76,6 @@ const fullRoutes = [
 		},
 		meta: {
 			icon: 'crown',
-			role: 'root'
 		}
 	},
 	error,

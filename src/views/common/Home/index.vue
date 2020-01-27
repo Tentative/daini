@@ -26,6 +26,7 @@ export default {
     console.log("Store check: ");
     console.log(this.$store);
     console.log(this.$store.state.permission.role);
+    console.log(this.$route);
   },
   methods: {
     goRepo() {

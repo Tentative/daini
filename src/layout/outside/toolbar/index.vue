@@ -16,11 +16,9 @@ export default {
   methods: {
     login() {
       this.$store.commit("switchRole", "root");
-      this.$store.commit("permittedRoutes", "fullRoutes");
     },
     logout() {
       this.$store.commit("switchRole", "guest");
-      this.$store.commit("permittedRoutes", "guestRoutes");
     }
   }
 };
