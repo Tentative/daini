@@ -7,4 +7,5 @@ export default {
 	role: state => state.permission.role,
 
 	routes: state => state.permission.permittedRoutes,
+	showRole: state => state.authenticated,
 }

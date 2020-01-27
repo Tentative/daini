@@ -1,16 +1,22 @@
-import router, {cleanRouter, fullRouter} from '@/router'
+import router, { cleanRouter, fullRouter } from '@/router'
 import fullRoutes from '@/router/fullRoutes'
+import guestRoutes from '../../router/guestRoutes';
 
 const roleMap = {
-	root: -1,
-	admin: 0,
-	user: 2,
+	guest: 0,
+	authenticated: 1,
+};
+
+const isAuth = {
+	state: {
+		count: 0
+	}
 };
 
 const permission = {
 	state: {
-		role: "root",
-		permittedRoutes: fullRoutes,
+		role: "guest",
+		permittedRoutes: guestRoutes
 	},
 	mutations: {
 		prepareRoutes: state => {
@@ -22,7 +28,7 @@ const permission = {
 		}
 	},
 	actions: {
-		UPDATE_ROUTES: ({commit, state}) => {
+		UPDATE_ROUTES: ({ commit, state }) => {
 			cleanRouter(router);
 			commit('prepareRoutes');
 			router.addRoutes(state.permittedRoutes);

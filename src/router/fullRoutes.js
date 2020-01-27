@@ -14,6 +14,16 @@ const fullRoutes = [
 		}
 	},
 	{
+		path: '/test',
+		name: 'test',
+		components: {
+			default: () => import('@/views/common/Home/login'),
+		},
+		meta: {
+			icon: 'earth'
+		}
+	},
+	{
 		path: '/about',
 		name: 'about',
 		components: {

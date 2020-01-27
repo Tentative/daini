@@ -10,10 +10,11 @@ import AsyncComputed from 'vue-async-computed'
 import '@/plugins/vue-echarts'
 import '@/plugins/frog-ui'
 import VueClipboard from 'vue-clipboard2'
-import {jumpTo} from '@/utils/routerUtils'
+import { jumpTo } from '@/utils/routerUtils'
 import commonPlugin from '@/plugins/common'
 import VueRx from 'vue-rx'
 import _ from 'lodash'
+
 
 
 Vue.config.productionTip = false;

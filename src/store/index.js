@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 import getters from './getters'
+import auth from './auth'
 
 Vue.use(Vuex);
 
@@ -17,6 +18,7 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
 const _store = new Vuex.Store({
   modules,
   getters,
+  auth,
   plugins: [createPersistedState({
     key: 'frog-admin'
   })]

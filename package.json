@@ -24,13 +24,14 @@
     "vue-echarts": "^4.0.3",
     "vue-router": "^3.0.7",
     "vue-rx": "^6.2.0",
+    "vuejs-jwt": "^1.1.0",
     "vuex": "^3.0.1",
     "vuex-persistedstate": "^2.5.4",
     "xlsx": "^0.14.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.9.0",
-    "@vue/cli-service": "^3.9.0",
+    "@vue/cli-service": "^4.1.2",
     "babel-plugin-component": "^1.1.1",
     "node-sass": "^4.13.1",
     "sass-loader": "^7.1.0",
