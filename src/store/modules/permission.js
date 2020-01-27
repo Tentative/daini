@@ -1,17 +1,16 @@
 import router, { cleanRouter, fullRouter } from '@/router'
 import fullRoutes from '@/router/fullRoutes'
-import guestRoutes from '../../router/guestRoutes';
 
 const roleMap = {
-	guest: 0,
-	root: 1,
+	root: -1,
+	admin: 0,
+	user: 2,
 };
-
 
 const permission = {
 	state: {
-		role: "guest",
-		permittedRoutes: guestRoutes
+		role: "root",
+		permittedRoutes: fullRoutes,
 	},
 	mutations: {
 		prepareRoutes: state => {
