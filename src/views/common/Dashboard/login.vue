@@ -20,7 +20,7 @@
 import Login from "@/components/common/Login";
 
 export default {
-  name: "App",
+  name: "signup",
   components: {
     Login
   }

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import ElementUI from "element-ui";
 import './plugins/element-ui.js'
 import './style/index.scss'
 import './assets/ant-icon'
@@ -23,6 +24,8 @@ Vue.use(commonPlugin);
 Vue.use(AsyncComputed);
 Vue.use(VueClipboard);
 Vue.use(VueRx);
+Vue.use(ElementUI);
+
 
 Vue.prototype.$vars = store.state.style.vars;
 Vue.prototype.$themes = store.state.style.themes;
