@@ -6,11 +6,24 @@ const fullRoutes = [
 		path: '/',
 		name: 'home',
 		components: {
+			default: () => import('@/views/common/Dashboard/login'),
+			tip: () => import('@/views/common/Home/tip')
+		},
+		meta: {
+			icon: 'earth',
+			role: 'guest'
+		}
+	},
+	{
+		path: '/dash',
+		name: 'dash',
+		components: {
 			default: () => import('@/views/common/Home/index'),
 			tip: () => import('@/views/common/Home/tip')
 		},
 		meta: {
-			icon: 'user'
+			icon: 'earth',
+			role: 'root'
 		}
 	},
 	{
