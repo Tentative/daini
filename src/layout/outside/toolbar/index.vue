@@ -2,8 +2,6 @@
   <div id="toolbar">
     <sidebar-activator />
     <div class="spacer"></div>
-    <el-button type="success" @click="login">login</el-button>
-    <el-button type="danger" @click="logout">logout</el-button>
   </div>
 </template>
 
@@ -12,15 +10,7 @@ import SidebarActivator from "@/layout/outside/toolbar/sidebarActivator";
 
 export default {
   name: "toolbar",
-  components: { SidebarActivator },
-  methods: {
-    login() {
-      this.$store.commit("switchRole", "root");
-    },
-    logout() {
-      this.$store.commit("switchRole", "guest");
-    }
-  }
+  components: { SidebarActivator }
 };
 </script>
 
