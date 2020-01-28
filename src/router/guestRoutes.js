@@ -1,20 +1,17 @@
 import error from './error'
-import dynamicRoutes from './dynamicRoutes'
-
 const guestRoutes = [
     {
         path: '/',
         name: 'home',
         components: {
-            default: () => import('@/views/common/Home/index'),
+            default: () => import('@/views/common/Dashboard/login'),
             tip: () => import('@/views/common/Home/tip')
         },
         meta: {
-            icon: 'home'
+            icon: 'earth',
+            role: 'guest'
         }
-    },
-
-    error,
-];
+    }
+]
 
 export default guestRoutes;
