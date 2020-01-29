@@ -23,7 +23,9 @@ const fullRoutes = [
 		},
 		meta: {
 			icon: 'earth',
-			role: 'root'
+			meta: {
+				requiresAuth: true
+			}
 		}
 	},
 	{

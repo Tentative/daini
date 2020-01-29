@@ -18,19 +18,8 @@ export default {
       STYLE_VARIABLES: "STYLE_VARIABLES",
       role: "role",
       showRole: "showRole",
-      isLoggedIn: function() {
-        return this.$store.getters.isLoggedIn;
-      }
+      isLoggedIn: "isLoggedIn"
     })
-  },
-
-  created() {
-    this.$store.dispatch("UPDATE_ROUTES").then();
-  },
-  watch: {
-    role() {
-      this.$store.dispatch("UPDATE_ROUTES").then();
-    }
   }
 };
 </script>

@@ -17,7 +17,7 @@ export default {
       return this.$store.getters.isLoggedIn;
     },
     methods: {
-      logout: function() {
+      logout() {
         this.$store.dispatch("logout").then(() => {
           this.$router.push("/login");
         });

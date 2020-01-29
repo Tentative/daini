@@ -45,7 +45,7 @@
 export default {
   name: "login",
   created() {
-    console.log(this.$store.getters);
+    console.log(this.$route);
   },
   data() {
     return {
