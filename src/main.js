@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import store from './store'
 import ElementUI from "element-ui";
 import './plugins/element-ui.js'
 import './style/index.scss'
@@ -15,6 +14,14 @@ import { jumpTo } from '@/utils/routerUtils'
 import commonPlugin from '@/plugins/common'
 import VueRx from 'vue-rx'
 import _ from 'lodash'
+import store from './store'
+import Axios from 'axios'
+
+Vue.prototype.$http = Axios;
+const token = localStorage.getItem('token')
+if (token) {
+	Vue.prototype.$http.defaults.headers.common['Authorization'] = token
+}
 
 
 
@@ -33,12 +40,7 @@ Vue.prototype.$apps = store.state.apps;
 Vue.prototype.$jumpTo = jumpTo;
 Vue.prototype.$routeState = store.state.routeState;
 Vue.prototype.$loda = _;
-Vue.prototype.$http = Axios;
 
-const token = localStorage.getItem('token')
-if (token) {
-	Vue.prototype.$http.defaults.headers.common['Authorization'] = token
-}
 
 Vue.prototype.$axios = axios;
 

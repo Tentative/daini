@@ -7,18 +7,18 @@
         :model="model"
         :rules="rules"
         ref="form"
-        @submit.native.prevent="login"
+        @submit.prevent="login"
       >
-        <el-form-item prop="username">
+        <el-form-item prop="email">
           <el-input
-            v-model="model.username"
-            placeholder="Username"
+            v-model="email"
+            placeholder="Email"
             prefix-icon="fas fa-user"
           ></el-input>
         </el-form-item>
         <el-form-item prop="password">
           <el-input
-            v-model="model.password"
+            v-model="password"
             placeholder="Password"
             type="password"
             prefix-icon="fas fa-lock"
@@ -47,14 +47,8 @@ export default {
   name: "login",
   data() {
     return {
-      validCredentials: {
-        username: "lightscope",
-        password: "lightscope"
-      },
-      model: {
-        username: "",
-        password: ""
-      },
+      email: "",
+      password: "",
       loading: false,
       rules: {
         username: [
@@ -81,6 +75,14 @@ export default {
     };
   },
   methods: {
+    login() {
+      let email = this.email;
+      let password = this.password;
+      this.$store
+        .dispatch("login", { email, password })
+        .then(() => this.$router.push("/"))
+        .catch(err => console.log(err));
+    },
     simulateLogin() {
       return new Promise(resolve => {
         setTimeout(resolve, 800);
