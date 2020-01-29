@@ -8,4 +8,6 @@ export default {
 
 	routes: state => state.permission.permittedRoutes,
 	showRole: state => state.authenticated,
+	isLoggedIn: state => !!state.token,
+	authStatus: state => state.status,
 }

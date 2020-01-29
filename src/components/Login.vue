@@ -44,6 +44,9 @@
 <script>
 export default {
   name: "login",
+  created() {
+    console.log(this.$store.getters);
+  },
   data() {
     return {
       email: "",
