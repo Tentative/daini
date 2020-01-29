@@ -1,7 +1,9 @@
 <template>
-  <div>
-    <p>login page</p>
-  </div>
+  <center>
+    <h1>
+      About Page
+    </h1>
+  </center>
 </template>
 
 <script>

@@ -6,7 +6,7 @@ const fullRoutes = [
 		path: '/',
 		name: 'home',
 		components: {
-			default: () => import('@/views/common/Home'),
+			default: () => import('@/views/common/Dashboard/login'),
 			tip: () => import('@/views/common/Home/tip')
 		},
 		meta: {
@@ -43,14 +43,32 @@ const fullRoutes = [
 		path: '/about',
 		name: 'about',
 		components: {
-			default: () => import('@/views/common/About/About'),
+			default: () => import('@/views/common/About/index'),
 			tip: () => import('@/views/common/About/tip')
 		},
 		meta: {
 			icon: 'info-circle',
 			role: 'root',
 		},
-
+		children: [
+			{
+				path: 'a',
+				name: 'a',
+				component: () => import('@/views/common/About/a'),
+				children: [
+					{
+						path: 'b',
+						name: 'b',
+						component: () => import('@/views/common/About/b')
+					},
+					{
+						path: 'c',
+						name: 'c',
+						component: () => import('@/views/common/About/c')
+					},
+				]
+			}
+		]
 	},
 	{
 		path: '/playground',

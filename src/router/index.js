@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import fullRoutes from './fullRoutes'
+import router from './router'
 import store from '@/store'
-
+import fullRoutes from './fullRoutes'
 Vue.use(Router);
 
 export function initRoutes(routes) {

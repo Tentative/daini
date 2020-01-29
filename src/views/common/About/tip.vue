@@ -1,15 +1,13 @@
 <template>
-	<div>
-		About tip
-	</div>
+  <div>
+    About Tip
+  </div>
 </template>
 
 <script>
-	export default {
-		name: "tip"
-	}
+export default {
+  name: "tip"
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
