@@ -4,7 +4,6 @@
       <h2>Login</h2>
       <el-form
         class="login-form"
-        :model="model"
         :rules="rules"
         ref="form"
         @submit.prevent="login"
@@ -73,6 +72,11 @@ export default {
         ]
       }
     };
+  },
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn;
+    }
   },
   methods: {
     login() {

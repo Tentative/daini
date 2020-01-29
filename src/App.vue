@@ -17,7 +17,10 @@ export default {
     ...mapGetters({
       STYLE_VARIABLES: "STYLE_VARIABLES",
       role: "role",
-      showRole: "showRole"
+      showRole: "showRole",
+      isLoggedIn: function() {
+        return this.$store.getters.isLoggedIn;
+      }
     })
   },
 

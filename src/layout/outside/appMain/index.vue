@@ -13,10 +13,8 @@ export default {
     route() {
       return this.$route.path;
     },
-    computed: {
-      isLoggedIn: function() {
-        return this.$store.getters.isLoggedIn;
-      }
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn;
     },
     methods: {
       logout: function() {

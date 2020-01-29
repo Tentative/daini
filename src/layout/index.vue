@@ -15,7 +15,12 @@ import Outside from "@/layout/outside/index";
 
 export default {
   name: "layout",
-  components: { Outside, Sidebar }
+  components: { Outside, Sidebar },
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn;
+    }
+  }
 };
 </script>
 
