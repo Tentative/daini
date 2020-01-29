@@ -33,6 +33,12 @@ Vue.prototype.$apps = store.state.apps;
 Vue.prototype.$jumpTo = jumpTo;
 Vue.prototype.$routeState = store.state.routeState;
 Vue.prototype.$loda = _;
+Vue.prototype.$http = Axios;
+
+const token = localStorage.getItem('token')
+if (token) {
+	Vue.prototype.$http.defaults.headers.common['Authorization'] = token
+}
 
 Vue.prototype.$axios = axios;
 
