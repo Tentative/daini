@@ -1,5 +1,4 @@
 import router, { cleanRouter, fullRouter, guestRoutes } from '@/router'
-import fullRoutes from '@/router/fullRoutes'
 
 const roleMap = {
 	root: -1,
@@ -19,8 +18,13 @@ const permission = {
 
 		switchRole: (state, r) => {
 			state.role = r;
+		},
+
+		toggleRole: (permittedRoutes, p) => {
+			state.permittedRoutes = p;
 		}
 	},
+
 	actions: {
 		UPDATE_ROUTES: ({ commit, state }) => {
 			cleanRouter(router);

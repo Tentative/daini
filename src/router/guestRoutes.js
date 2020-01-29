@@ -4,7 +4,7 @@ const guestRoutes = [
         path: '/',
         name: 'home',
         components: {
-            default: () => import('@/views/common/Dashboard/login'),
+            default: () => import('@/components/Login'),
             tip: () => import('@/views/common/Home/tip')
         },
         meta: {

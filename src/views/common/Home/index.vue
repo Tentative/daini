@@ -50,16 +50,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-#home {
-  text-align: center;
-
-  & > div {
-    margin: 50px 0;
-  }
-}
-
-#github-link {
-  color: black;
-}
-</style>
+<style lang="scss" scoped></style>
