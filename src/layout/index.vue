@@ -24,10 +24,14 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 #layout {
   display: flex;
   height: 100vh;
   width: 100vw;
+}
+
+body {
+  margin: 0 !important ;
 }
 </style>

@@ -31,7 +31,7 @@ export default new Vuex.Store({
         login({ commit }, user) {
             return new Promise((resolve, reject) => {
                 commit('auth_request')
-                axios({ url: 'http://localhost:3000/login', data: user, method: 'POST' })
+                axios({ url: 'https://a2044623-45d4-481c-a4ea-ee2356268380.mock.pstmn.io', data: user, method: 'POST' })
                     .then(resp => {
                         const token = resp.data.token
                         const user = resp.data.user

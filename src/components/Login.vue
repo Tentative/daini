@@ -6,7 +6,7 @@
         class="login-form"
         :rules="rules"
         ref="form"
-        @submit.prevent="login"
+        @submit.native.prevent="login"
       >
         <el-form-item prop="email">
           <el-input
