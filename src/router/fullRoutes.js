@@ -23,11 +23,11 @@ const fullRoutes = [
 		},
 		meta: {
 			icon: 'earth',
-			meta: {
-				requiresAuth: true
-			}
+			requiresAuth: true
+
 		}
 	},
+
 	// {
 	// 	path: '/test',
 	// 	name: 'test',
@@ -79,6 +79,7 @@ const fullRoutes = [
 	// 	}
 	// },
 	error,
+
 ];
 
 export default fullRoutes;
