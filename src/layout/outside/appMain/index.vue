@@ -12,16 +12,6 @@ export default {
   computed: {
     route() {
       return this.$route.path;
-    },
-    isLoggedIn() {
-      return this.$store.getters.isLoggedIn;
-    },
-    methods: {
-      logout() {
-        this.$store.dispatch("logout").then(() => {
-          this.$router.push("/login");
-        });
-      }
     }
   }
 };
