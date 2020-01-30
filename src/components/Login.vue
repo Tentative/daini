@@ -4,20 +4,21 @@
       <h2>Login</h2>
       <el-form
         class="login-form"
+        :model="model"
         :rules="rules"
         ref="form"
         @submit.native.prevent="login"
       >
         <el-form-item prop="email">
           <el-input
-            v-model="email"
+            v-model="model.email"
             placeholder="Email"
             prefix-icon="fas fa-user"
           ></el-input>
         </el-form-item>
         <el-form-item prop="password">
           <el-input
-            v-model="password"
+            v-model="model.password"
             placeholder="Password"
             type="password"
             prefix-icon="fas fa-lock"
@@ -25,6 +26,7 @@
         </el-form-item>
         <el-form-item>
           <el-button
+            v-if="!loading"
             :loading="loading"
             class="login-button"
             type="primary"
@@ -49,8 +51,10 @@ export default {
   },
   data() {
     return {
-      email: "",
-      password: "",
+      model: {
+        username: "",
+        password: ""
+      },
       loading: false,
       rules: {
         username: [
@@ -89,28 +93,6 @@ export default {
         .dispatch("login", { email, password })
         .then(() => this.$router.push("/"))
         .catch(err => console.log(err));
-    },
-    simulateLogin() {
-      return new Promise(resolve => {
-        setTimeout(resolve, 800);
-      });
-    },
-    async login() {
-      let valid = await this.$refs.form.validate();
-      if (!valid) {
-        return;
-      }
-      this.loading = true;
-      await this.simulateLogin();
-      this.loading = false;
-      if (
-        this.model.username === this.validCredentials.username &&
-        this.model.password === this.validCredentials.password
-      ) {
-        this.$message.success("Login successfull");
-      } else {
-        this.$message.error("Username or password is invalid");
-      }
     }
   }
 };
