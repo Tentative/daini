@@ -24,7 +24,6 @@ if (token) {
 }
 
 
-
 Vue.config.productionTip = false;
 
 Vue.use(commonPlugin);

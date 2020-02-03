@@ -9,9 +9,9 @@
         ref="form"
         @submit.native.prevent="login"
       >
-        <el-form-item prop="email">
+        <el-form-item prop="username">
           <el-input
-            v-model="model.email"
+            v-model="model.username"
             placeholder="Email"
             prefix-icon="fas fa-user"
           ></el-input>
@@ -87,11 +87,11 @@ export default {
   },
   methods: {
     login() {
-      let email = this.email;
-      let password = this.password;
+      let username = this.model.username;
+      let password = this.model.password;
       this.$store
-        .dispatch("login", { email, password })
-        .then(() => this.$router.push("/"))
+        .dispatch("login", { username, password })
+        .then(() => this.$router.push("/dash"))
         .catch(err => console.log(err));
     }
   }

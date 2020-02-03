@@ -10,20 +10,32 @@ const fullRoutes = [
 			tip: () => import('@/views/common/Home/tip')
 		},
 		meta: {
+			icon: 'earth'
+		}
+	},
+	{
+		path: '/secure',
+		name: 'secure',
+		components: {
+			default: () => import('@/views/common/Secure/Secure'),
+			tip: () => import('@/views/common/Home/tip')
+		},
+		meta: {
 			icon: 'earth',
-			role: 'guest'
+			requiresAuth: false,
+
 		}
 	},
 	{
 		path: '/dash',
 		name: 'dash',
 		components: {
-			default: () => import('@/views/common/Home/index'),
+			default: () => import('@/views/common/Secure/Secure'),
 			tip: () => import('@/views/common/Home/tip')
 		},
 		meta: {
 			icon: 'earth',
-			requiresAuth: true
+			requiresAuth: false
 
 		}
 	},
