@@ -19,7 +19,8 @@ const _store = new Vuex.Store({
   state: {
     status: '',
     token: localStorage.getItem('token') || '',
-    user: {}
+    user: {},
+    isLoggedIn: null
   },
   mutations: {
     auth_request(state) {
@@ -46,6 +47,7 @@ const _store = new Vuex.Store({
           .then(resp => {
             const token = resp.data.access_token
             const user = resp.data.user
+            this.state.isLoggedIn = true
             localStorage.setItem('token', token)
             axios.defaults.headers.common['Authorization'] = token
             commit('auth_success', token, user)

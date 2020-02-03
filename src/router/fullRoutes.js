@@ -14,19 +14,6 @@ const fullRoutes = [
 		}
 	},
 	{
-		path: '/secure',
-		name: 'secure',
-		components: {
-			default: () => import('@/views/common/Secure/Secure'),
-			tip: () => import('@/views/common/Home/tip')
-		},
-		meta: {
-			icon: 'earth',
-			requiresAuth: false,
-
-		}
-	},
-	{
 		path: '/dash',
 		name: 'dash',
 		components: {
@@ -35,6 +22,19 @@ const fullRoutes = [
 		},
 		meta: {
 			icon: 'earth',
+			requiresAuth: true
+
+		}
+	},
+	{
+		path: '/mainpage',
+		name: 'mainpage',
+		components: {
+			default: () => import('@/views/common/Main/'),
+			tip: () => import('@/views/common/Home/tip')
+		},
+		meta: {
+			icon: 'crown',
 			requiresAuth: false
 
 		}
