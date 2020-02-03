@@ -1,5 +1,5 @@
 import error from './error'
-// import dynamicRoutes from './dynamicRoutes'
+import dynamicRoutes from './dynamicRoutes'
 
 const fullRoutes = [
 	{
@@ -14,14 +14,15 @@ const fullRoutes = [
 		}
 	},
 	{
-		path: '/dash',
-		name: 'dash',
+		path: '/secure',
+		name: 'secure',
 		components: {
-			default: () => import('@/views/common/Secure/Secure'),
+			default: () => import('@/views/common/Secure'),
 			tip: () => import('@/views/common/Home/tip')
 		},
 		meta: {
 			icon: 'earth',
+			role: 'guest',
 			requiresAuth: true
 
 		}

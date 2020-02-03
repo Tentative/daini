@@ -3,9 +3,9 @@
     <center>
       <h1>Main Page (not secured)</h1>
       <p v-if="!isLogged">
-        Please go to <router-link to="/login"> login page </router-link> to
-        login
+        Please go to <router-link to="/"> login page </router-link> to login
       </p>
+      <p v-else>You are currently logged in</p>
     </center>
   </div>
 </template>

@@ -37,6 +37,7 @@ const _store = new Vuex.Store({
     logout(state) {
       state.status = ''
       state.token = ''
+      state.isLoggedIn = null
     },
   },
   actions: {

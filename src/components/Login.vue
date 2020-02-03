@@ -91,7 +91,7 @@ export default {
       let password = this.model.password;
       this.$store
         .dispatch("login", { username, password })
-        .then(() => this.$router.push("/dash"))
+        .then(() => this.$router.push("/mainpage"))
         .catch(err => console.log(err));
     }
   }
