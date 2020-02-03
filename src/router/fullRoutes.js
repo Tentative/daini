@@ -1,4 +1,5 @@
 import error from './error'
+import store from "@/store"
 import dynamicRoutes from './dynamicRoutes'
 
 const fullRoutes = [
@@ -22,7 +23,7 @@ const fullRoutes = [
 		},
 		meta: {
 			icon: 'earth',
-			role: 'guest',
+			role: 'root',
 			requiresAuth: true
 
 		}

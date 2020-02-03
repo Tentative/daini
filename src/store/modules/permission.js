@@ -1,4 +1,5 @@
 import router, { cleanRouter, fullRouter } from '@/router'
+import fullRoutes from '@/router/fullRoutes'
 
 const roleMap = {
 	root: -1,
@@ -8,8 +9,8 @@ const roleMap = {
 
 const permission = {
 	state: {
-		role: "guest",
-		permittedRoutes: fullRouter
+		role: "root",
+		permittedRoutes: fullRoutes,
 	},
 	mutations: {
 		prepareRoutes: state => {
@@ -18,13 +19,8 @@ const permission = {
 
 		switchRole: (state, r) => {
 			state.role = r;
-		},
-
-		toggleRole: (permittedRoutes, p) => {
-			state.permittedRoutes = p;
 		}
 	},
-
 	actions: {
 		UPDATE_ROUTES: ({ commit, state }) => {
 			cleanRouter(router);
