@@ -16,6 +16,7 @@ import VueRx from 'vue-rx'
 import _ from 'lodash'
 import store from './store'
 import Axios from 'axios'
+import locale from 'element-ui/lib/locale/lang/en'
 
 Vue.prototype.$http = Axios;
 const token = localStorage.getItem('token')
@@ -30,7 +31,7 @@ Vue.use(commonPlugin);
 Vue.use(AsyncComputed);
 Vue.use(VueClipboard);
 Vue.use(VueRx);
-Vue.use(ElementUI);
+Vue.use(ElementUI, { locale });
 
 
 Vue.prototype.$vars = store.state.style.vars;

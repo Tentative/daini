@@ -15,7 +15,7 @@ export default {
   name: "amazon",
   data() {
     return {
-      columns: ["postId", "id", "name", "email", "body"]
+      columns: ["ITEM", "AMZ PRICE", "OOS", "FT", "BB"]
     };
   },
   asyncComputed: {

@@ -1,7 +1,6 @@
 <template>
   <div id="layout">
     <sidebar />
-
     <outside />
   </div>
 </template>
