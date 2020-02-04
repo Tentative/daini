@@ -18,14 +18,11 @@
 
 <script>
 export default {
-  name: "Homepage",
+  name: "homepage",
   computed: {
     isLogged() {
-      return this.$store.state.isLogged;
+      return this.$store.state.isLoggedIn;
     }
-  },
-  props: {
-    msg: String
   }
 };
 </script>

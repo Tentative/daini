@@ -7,7 +7,7 @@ const fullRoutes = [
 		path: '/',
 		name: 'home',
 		components: {
-			default: () => import('@/components/Login'),
+			default: () => import('@/views/common/Home'),
 			tip: () => import('@/views/common/Home/tip')
 		},
 		meta: {
@@ -15,16 +15,16 @@ const fullRoutes = [
 		}
 	},
 	{
-		path: '/secure',
-		name: 'secure',
+		path: '/login',
+		name: 'login',
 		components: {
-			default: () => import('@/views/common/Secure'),
+			default: () => import('@/components/Login'),
 			tip: () => import('@/views/common/Home/tip')
 		},
 		meta: {
-			icon: 'earth',
+			icon: 'user',
 			role: 'root',
-			requiresAuth: true
+			requiresAuth: false
 
 		}
 	},
