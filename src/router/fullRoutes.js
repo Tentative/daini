@@ -7,32 +7,32 @@ const fullRoutes = [
 		path: '/',
 		name: 'home',
 		components: {
-			default: () => import('@/views/common/Home'),
+			default: () => import('@/components/Homepage'),
 			tip: () => import('@/views/common/Home/tip')
 		},
 		meta: {
-			icon: 'earth'
+			icon: 'user'
 		}
 	},
 	{
-		path: '/login',
-		name: 'login',
+		path: '/amz',
+		name: 'amazon',
 		components: {
-			default: () => import('@/components/Login'),
+			default: () => import('@/components/Amazon'),
 			tip: () => import('@/views/common/Home/tip')
 		},
 		meta: {
 			icon: 'user',
 			role: 'root',
-			requiresAuth: false
+			requiresAuth: true
 
 		}
 	},
 	{
-		path: '/mainpage',
-		name: 'mainpage',
+		path: '/test',
+		name: 'test',
 		components: {
-			default: () => import('@/views/common/Main/'),
+			default: () => import('@/views/common/Test/Table/eTable.vue'),
 			tip: () => import('@/views/common/Home/tip')
 		},
 		meta: {

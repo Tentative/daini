@@ -1,23 +1,21 @@
 <template>
   <div class="hello">
-    <div v-if="isLogged">
+    <div>
       <center>
-        <span>Welcome to your main page</span>
-      </center>
-    </div>
-    <div v-else>
-      <center>
-        <span
-          >You are not logged in. Please
-          <router-link to="/login"> login </router-link> to view this page</span
-        >
+        <p v-if="isLogged">Welcome to your main page</p>
+        <p v-else>You are not logged in. Please login to view this page</p>
+        <Main v-show="isLogged" />
+        <Login v-show="!isLogged" />
       </center>
     </div>
   </div>
 </template>
 
 <script>
+import Main from "@/components/Main";
+import Login from "@/components/Login";
 export default {
+  components: { Main, Login },
   name: "homepage",
   computed: {
     isLogged() {
@@ -28,19 +26,77 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-h3 {
-  margin: 40px 0 0;
+<style scoped>
+.login {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+
+.login-button {
+  width: 100%;
+  margin-top: 40px;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
+.login-form {
+  width: 290px;
+}
+.forgot-password {
+  margin-top: 10px;
+}
+</style>
+<style lang="scss">
+$teal: rgb(0, 124, 137);
+.el-button--primary {
+  background: $teal;
+  border-color: $teal;
+
+  &:hover,
+  &.active,
+  &:focus {
+    background: lighten($teal, 7);
+    border-color: lighten($teal, 7);
+  }
+}
+.login .el-input__inner:hover {
+  border-color: $teal;
+}
+.login .el-input__prefix {
+  background: rgb(238, 237, 234);
+  left: 0;
+  height: calc(100% - 2px);
+  left: 1px;
+  top: 1px;
+  border-radius: 3px;
+  .el-input__icon {
+    width: 30px;
+  }
+}
+.login .el-input input {
+  padding-left: 35px;
+}
+.login .el-card {
+  padding-top: 0;
+  padding-bottom: 30px;
+}
+h2 {
+  font-family: "Open Sans";
+  letter-spacing: 1px;
+  font-family: Roboto, sans-serif;
+  padding-bottom: 20px;
 }
 a {
-  color: #42b983;
+  color: $teal;
+  text-decoration: none;
+  &:hover,
+  &:active,
+  &:focus {
+    color: lighten($teal, 7);
+  }
+}
+.login .el-card {
+  width: 340px;
+  display: flex;
+  justify-content: center;
 }
 </style>

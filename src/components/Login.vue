@@ -1,51 +1,58 @@
 <template>
-  <div class="login">
-    <el-card>
-      <h2>Login</h2>
-      <el-form
-        class="login-form"
-        :model="model"
-        :rules="rules"
-        ref="form"
-        @submit.native.prevent="login"
-      >
-        <el-form-item prop="username">
-          <el-input
-            v-model="model.username"
-            placeholder="Email"
-            prefix-icon="fas fa-user"
-          ></el-input>
-        </el-form-item>
-        <el-form-item prop="password">
-          <el-input
-            v-model="model.password"
-            placeholder="Password"
-            type="password"
-            prefix-icon="fas fa-lock"
-          ></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button
-            v-if="!loading"
-            :loading="loading"
-            class="login-button"
-            type="primary"
-            native-type="submit"
-            block
-            >Login</el-button
-          >
-        </el-form-item>
-        <a class="forgot-password" href="https://oxfordinformatics.com/"
-          >Forgot password ?</a
+  <div class="main">
+    <div class="login">
+      <el-card>
+        <h2>Login</h2>
+        <el-form
+          class="login-form"
+          :model="model"
+          :rules="rules"
+          ref="form"
+          @submit.native.prevent="login"
         >
-      </el-form>
-    </el-card>
+          <el-form-item prop="username">
+            <el-input
+              v-model="model.username"
+              placeholder="Email"
+              prefix-icon="fas fa-user"
+            ></el-input>
+          </el-form-item>
+          <el-form-item prop="password">
+            <el-input
+              v-model="model.password"
+              placeholder="Password"
+              type="password"
+              prefix-icon="fas fa-lock"
+            ></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button
+              v-if="!loading"
+              :loading="loading"
+              class="login-button"
+              type="primary"
+              native-type="submit"
+              block
+              >Login</el-button
+            >
+          </el-form-item>
+          <a class="forgot-password" href="https://oxfordinformatics.com/"
+            >Forgot password ?</a
+          >
+        </el-form>
+      </el-card>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: "login",
+  computed: {
+    isLogged() {
+      this.$store.state.isLoggedIn;
+    }
+  },
   created() {
     console.log(this.$route);
   },

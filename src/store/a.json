@@ -1,0 +1,10 @@
+{
+  "CodiceClient": "reevolacerba2020",
+  "VersioneClient": "0.0.1",
+  "IndirizzoIP": "79.7.38.148",
+  "UserAgent": "PostmanRuntime/7.22.0",
+  "Url": "http://app.reevo.io",
+  "JsonWebToken": null,
+  "CodiceRichiesta": "Login",
+  "JsonRichiesta": "{\"NomeUtente\":\"pablo.daini@gmail.com\",\"Password\":\"12345\",\"IsMemorizzaPassword\":false}"
+}
