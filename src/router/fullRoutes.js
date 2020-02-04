@@ -18,12 +18,11 @@ const fullRoutes = [
 		path: '/amz',
 		name: 'amazon',
 		components: {
-			default: () => import('@/components/Amazon'),
+			default: () => import('@/views/common/Amazon/index.vue'),
 			tip: () => import('@/views/common/Home/tip')
 		},
 		meta: {
-			icon: 'user',
-			role: 'root',
+			icon: 'amazon',
 			requiresAuth: true
 
 		}
@@ -36,7 +35,7 @@ const fullRoutes = [
 			tip: () => import('@/views/common/Home/tip')
 		},
 		meta: {
-			icon: 'crown',
+			icon: 'signal-fill',
 			requiresAuth: false
 
 		}

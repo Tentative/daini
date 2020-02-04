@@ -1,6 +1,11 @@
 <template>
   <div id="toolbar">
     <sidebar-activator />
+    <div class="nav">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link
+      ><span v-if="isLoggedIn"> | <a @click="logout">Logout</a></span>
+    </div>
     <div class="spacer"></div>
   </div>
 </template>
@@ -10,7 +15,19 @@ import SidebarActivator from "@/layout/outside/toolbar/sidebarActivator";
 
 export default {
   name: "toolbar",
-  components: { SidebarActivator }
+  components: { SidebarActivator },
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn;
+    }
+  },
+  methods: {
+    logout: function() {
+      this.$store.dispatch("logout").then(() => {
+        this.$router.push("/");
+      });
+    }
+  }
 };
 </script>
 
@@ -21,5 +38,14 @@ export default {
   height: var(--toolbar-height);
   display: inline-flex;
   flex-wrap: nowrap;
+}
+
+.nav {
+  text-align: center;
+  margin: auto 5%;
+}
+
+.spacer {
+  flex: 0.5;
 }
 </style>
