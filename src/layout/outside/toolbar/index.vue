@@ -42,7 +42,7 @@ export default {
 
 .nav {
   text-align: center;
-  margin: auto 5%;
+  margin: auto 2.5%;
 }
 
 .spacer {
