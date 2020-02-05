@@ -59,6 +59,17 @@ export default {
   },
   data() {
     return {
+      Richiesta: {
+        CodiceClient: "reevolacerba2020",
+        VersioneClient: "0.0.1",
+        IndirizzoIP: "79.7.38.148",
+        UserAgent: "useragenttest",
+        Url: "https://app.reevo.io/",
+        JsonWebToken: null,
+        CodiceRichiesta: "Login",
+        JsonRichiesta: JSON.stringify(this.Richiesta)
+      },
+
       model: {
         username: "",
         password: ""
@@ -106,20 +117,19 @@ export default {
           headers: {
             "Content-Type": "application/json"
           },
-          CodiceClient: "reevolacerba2020",
-          VersioneClient: "0.0.1",
-          IndirizzoIP: "172.21.117.132",
-          UserAgent:
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36 Edg/79.0.309.71",
-          Url: "https://app.reevo.io",
-          JsonWebToken: null,
-          CodiceRichiesta: "Login",
-          JsonRichiesta:
-            '{"NomeUtente":"pablo.daini@gmail.com","Password":"12345","IsMemorizzaPassword":false}'
+          CodiceClient: this.CodiceClient,
+          VersioneClient: this.VersioneClient,
+          IndirizzoIP: this.IndirizzoIP,
+          UserAgent: this.UserAgent,
+          Url: this.Url,
+          JsonWebToken: this.JsonWebToken,
+          CodiceRichiesta: this.CodiceRichiesta,
+          JsonRichiesta: this.JsonRichiesta
         })
         .then(res => {
-          console.log("res");
-        });
+          console.log(res);
+        })
+        .catch(error => console.log(error));
     }
   }
 };
