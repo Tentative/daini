@@ -6,6 +6,8 @@ import axios from 'axios'
 
 Vue.use(Vuex);
 
+axios.defaults.baseURL = 'https://data.reevo.io';
+
 const modulesFiles = require.context('./modules', false, /\.js$/);
 
 const modules = modulesFiles.keys().reduce((modules, modulePath) => {
@@ -19,6 +21,8 @@ const _store = new Vuex.Store({
   state: {
     status: '',
     token: localStorage.getItem('token') || '',
+    IsMemorizzaPassword: false,
+    CodiceRichiesta: '',
     user: {},
     isLoggedIn: null
   },
@@ -39,12 +43,18 @@ const _store = new Vuex.Store({
       state.token = ''
       state.isLoggedIn = null
     },
+    request(state) {
+      state.CodiceRichiesta = ''
+    },
+    keepLogged(state) {
+      state.IsMemorizzaPassword = ''
+    }
   },
   actions: {
     login({ commit }, user) {
       return new Promise((resolve, reject) => {
         commit('auth_request')
-        axios({ url: 'http://localhost:3001/sessions/create', data: user, method: 'POST' })
+        axios({ url: proxy + URL, data: user, method: 'GET' })
           .then(resp => {
             const token = resp.data.access_token
             const user = resp.data.user
@@ -59,6 +69,19 @@ const _store = new Vuex.Store({
             localStorage.removeItem('token')
             reject(err)
           })
+      })
+    },
+    requestALL() {
+      this.$axios.get("/", {
+        CodiceClient: "reevolacerba2020",
+        VersioneClient: "0.0.1",
+        IndirizzoIP: ipUtente,
+        UserAgent: navigator.UserAgent,
+        Url: window.location.href,
+        JsonWebToken: jwtUtente,
+        CodiceRichiesta: state.CodiceRichiesta,
+        JsonRichiesta: JSON.stringify(Richiesta)
+
       })
     },
     logout({ commit }) {

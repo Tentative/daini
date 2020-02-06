@@ -36,8 +36,8 @@
               >Login</el-button
             >
           </el-form-item>
-          <a class="forgot-password" href="https://oxfordinformatics.com/"
-            >Forgot password ?</a
+          <el-checkbox v-model="model.IsMemorizzaPassword"
+            >Keep logged in</el-checkbox
           >
         </el-form>
       </el-card>
@@ -55,7 +55,6 @@ export default {
   },
   created() {
     console.log(this.$route);
-    this.login();
   },
   data() {
     return {
@@ -72,7 +71,8 @@ export default {
 
       model: {
         username: "",
-        password: ""
+        password: "",
+        IsMemorizzaPassword: ""
       },
       loading: false,
       rules: {
@@ -105,7 +105,7 @@ export default {
     }
   },
   methods: {
-    login() {
+    Richiesta() {
       // let username = this.model.username;
       // let password = this.model.password;
       // this.$store
@@ -130,7 +130,22 @@ export default {
           console.log(res);
         })
         .catch(error => console.log(error));
-    }
+    },
+    login() {
+      this.$axios
+        .get("https://cors-anywhere.herokuapp.com/https://data.reevo.io", {
+          headers: {
+            "Content-Type": "application/json"
+          },
+          NomeUtente: this.model.username,
+          Password: this.model.password,
+          IsMemorizzaPassword: this.IsMemorizzaPassword
+        })
+        .then(res => {
+          console.log(res);
+        });
+    },
+    keepLogged() {}
   }
 };
 </script>
