@@ -28,7 +28,8 @@ export default {
       STYLE_VARIABLES: "STYLE_VARIABLES",
       role: "role",
       showRole: "showRole",
-      isLoggedIn: "isLoggedIn"
+      isLoggedIn: "isLoggedIn",
+      authStatus: "authStatus"
     })
   }
 };

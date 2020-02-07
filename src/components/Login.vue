@@ -49,8 +49,8 @@
 export default {
   name: "login",
   computed: {
-    isLogged() {
-      this.$store.state.isLoggedIn;
+    isLoggedIn: function() {
+      return this.$store.getters.isLoggedIn;
     }
   },
   created() {
@@ -58,17 +58,16 @@ export default {
   },
   data() {
     return {
-      Richiesta: {
-        CodiceClient: "reevolacerba2020",
-        VersioneClient: "0.0.1",
-        IndirizzoIP: "79.7.38.148",
-        UserAgent: "useragenttest",
-        Url: "https://app.reevo.io/",
-        JsonWebToken: null,
-        CodiceRichiesta: "Login",
-        JsonRichiesta: JSON.stringify(this.Richiesta)
-      },
-
+      // Richiesta: {
+      //   CodiceClient: "reevolacerba2020",
+      //   VersioneClient: "0.0.1",
+      //   IndirizzoIP: "79.7.38.148",
+      //   UserAgent: "useragenttest",
+      //   Url: "https://app.reevo.io/",
+      //   JsonWebToken: null,
+      //   CodiceRichiesta: "Login",
+      //   JsonRichiesta: JSON.stringify(this.Richiesta)
+      // },
       model: {
         username: "",
         password: "",
@@ -105,47 +104,30 @@ export default {
     }
   },
   methods: {
-    Richiesta() {
-      // let username = this.model.username;
-      // let password = this.model.password;
-      // this.$store
-      //   .dispatch("login", { username, password })
-      //   .then(() => this.$router.push("/"))
-      //   .catch(err => console.log(err));
-      this.$axios
-        .get("https://data.reevo.io", {
-          headers: {
-            "Content-Type": "application/json"
-          },
-          CodiceClient: this.CodiceClient,
-          VersioneClient: this.VersioneClient,
-          IndirizzoIP: this.IndirizzoIP,
-          UserAgent: this.UserAgent,
-          Url: this.Url,
-          JsonWebToken: this.JsonWebToken,
-          CodiceRichiesta: this.CodiceRichiesta,
-          JsonRichiesta: this.JsonRichiesta
-        })
-        .then(res => {
-          console.log(res);
-        })
-        .catch(error => console.log(error));
-    },
     login() {
-      this.$axios
-        .get("https://cors-anywhere.herokuapp.com/https://data.reevo.io", {
-          headers: {
-            "Content-Type": "application/json"
-          },
-          NomeUtente: this.model.username,
-          Password: this.model.password,
-          IsMemorizzaPassword: this.IsMemorizzaPassword
-        })
-        .then(res => {
-          console.log(res);
-        });
-    },
-    keepLogged() {}
+      let username = this.model.username;
+      let password = this.model.password;
+      let IsMemorizzaPassword = this.model.IsMemorizzaPassword;
+      this.$store
+        .dispatch("login", { username, password, IsMemorizzaPassword })
+        .then(() => this.$router.push("/"))
+        .catch(err => console.log(err));
+
+      // login() {
+      //   this.$axios
+      //     .get("https://cors-anywhere.herokuapp.com/https://data.reevo.io", {
+      //       headers: {
+      //         "Content-Type": "application/json"
+      //       },
+      //       NomeUtente: this.model.username,
+      //       Password: this.model.password,
+      //       IsMemorizzaPassword: this.IsMemorizzaPassword
+      //     })
+      //     .then(res => {
+      //       console.log(res);
+      //     });
+      // },
+    }
   }
 };
 </script>

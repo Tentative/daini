@@ -24,7 +24,6 @@ const _store = new Vuex.Store({
     IsMemorizzaPassword: false,
     CodiceRichiesta: '',
     user: {},
-    isLoggedIn: null
   },
   mutations: {
     auth_request(state) {
@@ -41,7 +40,6 @@ const _store = new Vuex.Store({
     logout(state) {
       state.status = ''
       state.token = ''
-      state.isLoggedIn = null
     },
     request(state) {
       state.CodiceRichiesta = ''
@@ -54,15 +52,19 @@ const _store = new Vuex.Store({
     login({ commit }, user) {
       return new Promise((resolve, reject) => {
         commit('auth_request')
-        axios({ url: proxy + URL, data: user, method: 'GET' })
+        axios({ url: "/", method: 'GET' })
           .then(resp => {
             const token = resp.data.access_token
             const user = resp.data.user
-            this.state.isLoggedIn = true
+            if (resp.data.CodiceRisposta == "RispostaOk") {
+              this.state.isLoggedIn = true;
+            }
+            console.log("Codice risposta: " + resp.data.CodiceRisposta)
             localStorage.setItem('token', token)
             axios.defaults.headers.common['Authorization'] = token
             commit('auth_success', token, user)
             resolve(resp)
+            console.log(resp)
           })
           .catch(err => {
             commit('auth_error')

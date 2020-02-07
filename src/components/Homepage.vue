@@ -4,8 +4,8 @@
       <center>
         <p v-if="isLogged">Welcome to your main page</p>
         <p v-else>You are not logged in. Please login to view this page</p>
-        <Main v-show="isLogged" />
-        <Login v-show="!isLogged" />
+        <Main v-show="authStat" />
+        <Login v-show="!authStat" />
       </center>
     </div>
   </div>
@@ -17,9 +17,19 @@ import Login from "@/components/Login";
 export default {
   components: { Main, Login },
   name: "homepage",
+  data() {
+    return {
+      authStat: null
+    };
+  },
   computed: {
-    isLogged() {
-      return this.$store.state.isLoggedIn;
+    isAuth: function() {
+      let stat = this.$store.getters.authStatus;
+      if (stat == "success") {
+        this.authStat = true;
+      } else {
+        this.authStat = false;
+      }
     }
   }
 };
