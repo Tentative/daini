@@ -52,13 +52,10 @@ const _store = new Vuex.Store({
     login({ commit }, user) {
       return new Promise((resolve, reject) => {
         commit('auth_request')
-        axios({ url: "/", method: 'GET' })
+        axios({ url: "/", method: 'GET', data: user })
           .then(resp => {
             const token = resp.data.access_token
             const user = resp.data.user
-            if (resp.data.CodiceRisposta == "RispostaOk") {
-              this.state.isLoggedIn = true;
-            }
             console.log("Codice risposta: " + resp.data.CodiceRisposta)
             localStorage.setItem('token', token)
             axios.defaults.headers.common['Authorization'] = token

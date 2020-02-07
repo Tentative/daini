@@ -22,16 +22,7 @@ export default {
       authStat: null
     };
   },
-  computed: {
-    isAuth: function() {
-      let stat = this.$store.getters.authStatus;
-      if (stat == "success") {
-        this.authStat = true;
-      } else {
-        this.authStat = false;
-      }
-    }
-  }
+  computed: {}
 };
 </script>
 
