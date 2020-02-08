@@ -60,7 +60,7 @@ const _store = new Vuex.Store({
       return new Promise((resolve, reject) => {
         commit('auth_request')
         axios({ url: "/", method: 'GET', headers: {
-          "Content-Type" : "text/plain"
+          "Content-Type" : "application/x-www-form-urlencoded"
         }, data: {
           NomeUtente: this.state.NomeUtente,
           Password: this.state.Password,
