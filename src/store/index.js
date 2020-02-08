@@ -59,7 +59,13 @@ const _store = new Vuex.Store({
     login({ commit }, user) {
       return new Promise((resolve, reject) => {
         commit('auth_request')
-        axios({ url: "/", method: 'GET'} )
+        axios({ url: "/", method: 'GET', headers: {
+          "Content-Type" : "text/plain"
+        }, data: {
+          NomeUtente: this.state.NomeUtente,
+          Password: this.state.Password,
+          CodiceRichiesta: this.state.CodiceRichiesta
+        }} )
           .then(resp => {
             const token = resp.data.access_token
             const user = resp.data.user
