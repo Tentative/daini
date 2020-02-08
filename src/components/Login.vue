@@ -68,6 +68,7 @@ export default {
       //   CodiceRichiesta: "Login",
       //   JsonRichiesta: JSON.stringify(this.Richiesta)
       // },
+      CodiceRichiesta: 'Login',
       model: {
         username: "",
         password: "",
@@ -105,28 +106,14 @@ export default {
   },
   methods: {
     login() {
-      let username = this.model.username;
-      let password = this.model.password;
+      let NomeUtente = this.model.username;
+      let Password = this.model.password;
       let IsMemorizzaPassword = this.model.IsMemorizzaPassword;
+      let CodiceRichiesta = 'Login';
       this.$store
-        .dispatch("login", { username, password, IsMemorizzaPassword })
+        .dispatch("login", { NomeUtente, Password, IsMemorizzaPassword, CodiceRichiesta })
         .then(() => this.$router.push("/"))
         .catch(err => console.log(err));
-
-      // login() {
-      //   this.$axios
-      //     .get("https://cors-anywhere.herokuapp.com/https://data.reevo.io", {
-      //       headers: {
-      //         "Content-Type": "application/json"
-      //       },
-      //       NomeUtente: this.model.username,
-      //       Password: this.model.password,
-      //       IsMemorizzaPassword: this.IsMemorizzaPassword
-      //     })
-      //     .then(res => {
-      //       console.log(res);
-      //     });
-      // },
     }
   }
 };

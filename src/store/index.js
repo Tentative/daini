@@ -21,9 +21,16 @@ const _store = new Vuex.Store({
   state: {
     status: '',
     token: localStorage.getItem('token') || '',
-    IsMemorizzaPassword: false,
-    CodiceRichiesta: '',
-    user: {},
+    user: {
+      NomeUtente: '',
+      Password: '',
+      CodiceRichiesta: '',
+      IsMemorizzaPassword: null,
+      CodiceClient: 'reevolacerba2020',
+      UserAgent: 'test',
+      IndirizzoIP: 'test',
+      VersioneClient: 'test'
+    },
   },
   mutations: {
     auth_request(state) {
@@ -52,14 +59,15 @@ const _store = new Vuex.Store({
     login({ commit }, user) {
       return new Promise((resolve, reject) => {
         commit('auth_request')
-        axios({ url: "/", method: 'GET', data: user })
+        axios({ url: "/", method: 'GET'} )
           .then(resp => {
             const token = resp.data.access_token
             const user = resp.data.user
             console.log("Codice risposta: " + resp.data.CodiceRisposta)
             localStorage.setItem('token', token)
             axios.defaults.headers.common['Authorization'] = token
-            commit('auth_success', token, user)
+            if (resp.data.CodiceRIsposta == 'Ok') {
+            commit('auth_success', token, user) }
             resolve(resp)
             console.log(resp)
           })
