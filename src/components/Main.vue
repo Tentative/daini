@@ -1,7 +1,9 @@
 <template>
   <div>
-    <el-button secondary>
-      AMZ
+    <el-button secondary
+      ><router-link to="/amz">
+        AMZ
+      </router-link>
     </el-button>
     <el-button secondary>
       Graphs
