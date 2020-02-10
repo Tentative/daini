@@ -31,6 +31,9 @@ const _store = new Vuex.Store({
       NomeUtente: "",
       Password: "",
       IsMemorizzaPassword: null
+    },
+    user: {
+
     }
   },
   mutations: {
@@ -114,13 +117,16 @@ const _store = new Vuex.Store({
       };
       axios({
         url: "/",
-        method: "POST",
+        method: "GET",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
         },
-        data: JSON.stringify(Richiesta)
+        params: JSON.stringify(Richiesta)
       }).then(res => {
-        console.log(res.config.data);
+        const user = JSON.stringify(res.data.JsonRisposta);
+        commit('auth_success', user)
+        // console.log(dataRes.JsonWebToken);
+        console.log(res.data.JsonRisposta);
         console.log(res);
       });
     },
