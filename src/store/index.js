@@ -106,7 +106,7 @@ const _store = new Vuex.Store({
       commit("auth_request", login);
       var Richiesta = {
         // CodiceClient: "reevolacerba2020",
-        // VersioneClient: "0.4.5",
+        // VersioneClient: "0.4.7",
         // IndirizzoIP: state.ipUtente,
         // UserAgent: state.userAgentUtente,
         // Url: state.url,
@@ -123,10 +123,12 @@ const _store = new Vuex.Store({
         },
         params: JSON.stringify(Richiesta)
       }).then(res => {
-        const user = JSON.stringify(res.data.JsonRisposta);
-        commit('auth_success', user)
-        // console.log(dataRes.JsonWebToken);
-        console.log(res.data.JsonRisposta);
+        const user = JSON.parse(res.data.JsonRisposta);
+        const token = user.JsonWebToken;
+        if (user.IsAutorizzato) {
+          commit('auth_success', user, token)
+        }
+        console.log(user);
         console.log(res);
       });
     },
