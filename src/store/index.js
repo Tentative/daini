@@ -106,7 +106,7 @@ const _store = new Vuex.Store({
       commit("auth_request", login);
       var Richiesta = {
         // CodiceClient: "reevolacerba2020",
-        // VersioneClient: "0.4.7",
+        // VersioneClient: "0.5.0",
         // IndirizzoIP: state.ipUtente,
         // UserAgent: state.userAgentUtente,
         // Url: state.url,

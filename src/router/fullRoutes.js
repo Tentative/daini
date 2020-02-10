@@ -23,7 +23,7 @@ const fullRoutes = [
 		},
 		meta: {
 			icon: 'amazon',
-			requiresAuth: true
+			requiresAuth: true,
 
 		}
 	},

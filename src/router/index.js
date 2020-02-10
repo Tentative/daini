@@ -51,26 +51,26 @@ export const fullRouter = fullRoutes;
 
 const _router = initRoutes(fullRouter);
 
-_router.beforeEach(((to, from, next) => {
-	console.log(to);
-	if (to.matched.length > 0) {
-		next();
-	} else {
-		let pathArray = pathToArray(to.path);
-		if (!routeEureka(pathArray, fullRouter)) {
-			next('/error/404')
-		} else if (!routeEureka(pathArray, store.state.permission.permittedRoutes)) {
-			next('/error/403')
-		}
-	}
-}));
+// _router.beforeEach(((to, from, next) => {
+// 	console.log(to);
+// 	if (to.matched.length > 0) {
+// 		next();
+// 	} else {
+// 		let pathArray = pathToArray(to.path);
+// 		if (!routeEureka(pathArray, fullRouter)) {
+// 			next('/error/404')
+// 		} else if (!routeEureka(pathArray, store.state.permission.permittedRoutes)) {
+// 			next('/error/403')
+// 		}
+// 	}
+// }));
 _router.beforeEach((to, from, next) => {
 	if (to.matched.some(record => record.meta.requiresAuth)) {
 		if (store.getters.isLoggedIn) {
 			next()
 			return
 		}
-		next('/login')
+		next('/error/403')
 	} else {
 		next()
 	}
