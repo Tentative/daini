@@ -68,11 +68,11 @@ export default {
       //   CodiceRichiesta: "Login",
       //   JsonRichiesta: JSON.stringify(this.Richiesta)
       // },
-      CodiceRichiesta: 'Login',
+      CodiceRichiesta: "Login",
       model: {
         username: "",
         password: "",
-        IsMemorizzaPassword: ""
+        IsMemorizzaPassword: false
       },
       loading: false,
       rules: {
@@ -109,9 +109,12 @@ export default {
       let NomeUtente = this.model.username;
       let Password = this.model.password;
       let IsMemorizzaPassword = this.model.IsMemorizzaPassword;
-      let CodiceRichiesta = 'Login';
       this.$store
-        .dispatch("login", { NomeUtente, Password, IsMemorizzaPassword, CodiceRichiesta })
+        .dispatch("login", {
+          NomeUtente,
+          Password,
+          IsMemorizzaPassword
+        })
         .then(() => this.$router.push("/"))
         .catch(err => console.log(err));
     }

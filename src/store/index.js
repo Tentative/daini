@@ -101,23 +101,24 @@ const _store = new Vuex.Store({
     },
     login({ commit, state }, login) {
       commit("auth_request", login);
-      let Richiesta = {
+      var Richiesta = {
         // CodiceClient: "reevolacerba2020",
         // VersioneClient: "0.4.5",
         // IndirizzoIP: state.ipUtente,
         // UserAgent: state.userAgentUtente,
         // Url: state.url,
         // JsonWebToken: state.jwtUtente,
+        CodiceClient: "reevolacerba2020",
         CodiceRichiesta: state.CodiceRichiesta,
         JsonRichiesta: JSON.stringify(login)
       };
       axios({
         url: "/",
-        method: "GET",
-        // headers: {
-        //   "Content-Type": "application/x-www-form-urlencoded"
-        // },
-        params: JSON.stringify(Richiesta)
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        data: JSON.stringify(Richiesta)
       }).then(res => {
         console.log(res.config.data);
         console.log(res);
