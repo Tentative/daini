@@ -128,6 +128,9 @@ const _store = new Vuex.Store({
         if (user.IsAutorizzato) {
           commit('auth_success', user, token)
         }
+        else {
+          commit('auth_error');
+        }
         console.log(user);
         console.log(res);
       });

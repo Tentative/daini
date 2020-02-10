@@ -36,6 +36,7 @@
               >Login</el-button
             >
           </el-form-item>
+          <p class="error" v-show="authStat == 'error'">Unauthorized user</p>
           <el-checkbox v-model="model.IsMemorizzaPassword"
             >Keep logged in</el-checkbox
           >
@@ -49,12 +50,15 @@
 export default {
   name: "login",
   computed: {
-    isLoggedIn: function() {
+    isLoggedIn() {
       return this.$store.getters.isLoggedIn;
+    },
+    authStat: function() {
+      return this.$store.getters.authStatus;
+    },
+    created() {
+      console.log(this.$route);
     }
-  },
-  created() {
-    console.log(this.$route);
   },
   data() {
     return {
@@ -89,7 +93,11 @@ export default {
           }
         ],
         password: [
-          { required: true, message: "Password is required", trigger: "blur" },
+          {
+            required: true,
+            message: "Password is required",
+            trigger: "blur"
+          },
           {
             min: 5,
             message: "Password length should be at least 5 characters",
@@ -98,11 +106,6 @@ export default {
         ]
       }
     };
-  },
-  computed: {
-    isLoggedIn() {
-      return this.$store.getters.isLoggedIn;
-    }
   },
   methods: {
     login() {
@@ -140,6 +143,10 @@ export default {
 }
 .forgot-password {
   margin-top: 10px;
+}
+
+.error {
+  color: red;
 }
 </style>
 <style lang="scss">
