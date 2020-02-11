@@ -124,15 +124,17 @@ const _store = new Vuex.Store({
         params: JSON.stringify(Richiesta)
       }).then(res => {
         const user = JSON.parse(res.data.JsonRisposta);
-        const token = user.JsonWebToken;
+        const token = JSON.stringify(JsonWebToken);
+        console.log(user);
+        console.log(token);
         if (user.IsAutorizzato) {
           commit('auth_success', user, token)
+          axios.defaults.headers.common['Authorization'] = token
         }
         else {
           commit('auth_error');
         }
-        console.log(user);
-        console.log(res);
+
       });
     },
     logout({ commit }) {

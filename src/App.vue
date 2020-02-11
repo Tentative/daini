@@ -41,7 +41,8 @@ export default {
   -webkit-font-smoothing: antialiased;
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
-  color: #2c3e50;
+  /* color: #2c3e50; */
+  color: #fff;
   overflow: hidden;
 }
 

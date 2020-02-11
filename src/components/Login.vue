@@ -1,5 +1,6 @@
 <template>
   <div class="main">
+    <h2 class="logo">Reevo</h2>
     <div class="login">
       <el-card>
         <h2>Login</h2>
@@ -112,6 +113,7 @@ export default {
       let NomeUtente = this.model.username;
       let Password = this.model.password;
       let IsMemorizzaPassword = this.model.IsMemorizzaPassword;
+      this.loading = true;
       this.$store
         .dispatch("login", {
           NomeUtente,
@@ -127,6 +129,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+/*** LOGO ***/
+
 .login {
   flex: 1;
   display: flex;
@@ -149,7 +153,20 @@ export default {
   color: red;
 }
 </style>
-<style lang="scss">
+<style lang="scss" scoped>
+@font-face {
+  font-family: reevoFont;
+  src: url("/root/frog-admin/src/assets/font/Sketchalot.ttf");
+}
+
+.logo {
+  font-family: "reevoFont";
+  letter-spacing: 3px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  color: #fff;
+}
+
 $teal: rgb(0, 124, 137);
 .el-button--primary {
   background: $teal;
