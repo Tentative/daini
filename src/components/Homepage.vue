@@ -4,8 +4,8 @@
       <center>
         <p v-if="isAuth">Welcome to your main page</p>
         <p v-else>You are not logged in. Please login to view this page</p>
-        <Main v-show="isAuth != ''" />
-        <Login v-show="isAuth.length == 0" />
+        <Main v-show="isAuth" />
+        <Login v-show="!isAuth" />
       </center>
     </div>
   </div>
@@ -20,7 +20,7 @@ export default {
 
   computed: {
     isAuth: function() {
-      return this.$store.state.token;
+      return this.$store.getters.isLoggedIn;
     }
   }
 };

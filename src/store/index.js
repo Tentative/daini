@@ -26,7 +26,7 @@ const _store = new Vuex.Store({
     ipUtente: "127.0.0.0",
     userAgentUtente: "user agent test",
     url: "app.reevo.io/login",
-    jwtUtente: null,
+    jwtUtente: "",
     login: {
       NomeUtente: "",
       Password: "",
@@ -42,9 +42,9 @@ const _store = new Vuex.Store({
       state.login = login;
       state.CodiceRichiesta = "Login";
     },
-    auth_success(state, token, user) {
+    auth_success(state, jwtUtente, user) {
       state.status = "success";
-      state.token = token;
+      state.jwtUtente = jwtUtente;
       state.user = user;
     },
     auth_error(state) {
@@ -52,14 +52,14 @@ const _store = new Vuex.Store({
     },
     logout(state) {
       state.status = "";
-      state.token = "";
+      state.jwtUtente = "";
     },
     request(state) {
       state.CodiceRichiesta = "";
     },
     keepLogged(state) {
       state.IsMemorizzaPassword = "";
-    }
+    },
   },
   actions: {
     // login({ commit }, user) {
@@ -105,12 +105,11 @@ const _store = new Vuex.Store({
     login({ commit, state }, login) {
       commit("auth_request", login);
       var Richiesta = {
-        // CodiceClient: "reevolacerba2020",
-        // VersioneClient: "0.5.0",
+        // VersioneClient: "0.5.2",
         // IndirizzoIP: state.ipUtente,
         // UserAgent: state.userAgentUtente,
         // Url: state.url,
-        // JsonWebToken: state.jwtUtente,
+        JsonWebToken: state.jwtUtente,
         CodiceClient: "reevolacerba2020",
         CodiceRichiesta: state.CodiceRichiesta,
         JsonRichiesta: JSON.stringify(login)
@@ -124,12 +123,12 @@ const _store = new Vuex.Store({
         params: JSON.stringify(Richiesta)
       }).then(res => {
         const user = JSON.parse(res.data.JsonRisposta);
-        const token = JSON.stringify(user.JsonWebToken);
+        const jwtUtente = user.JsonWebToken;
         console.log(user);
-        console.log(token);
+        console.log(jwtUtente);
         if (user.IsAutorizzato) {
-          commit('auth_success', user, token)
-          axios.defaults.headers.common['Authorization'] = token
+          commit('auth_success', jwtUtente)
+          axios.defaults.headers.common['Authorization'] = jwtUtente
         }
         else {
           commit('auth_error');
@@ -140,7 +139,7 @@ const _store = new Vuex.Store({
     logout({ commit }) {
       return new Promise((resolve, reject) => {
         commit("logout");
-        localStorage.removeItem("token");
+        localStorage.removeItem("jwtUtente");
         delete axios.defaults.headers.common["Authorization"];
         resolve();
       });

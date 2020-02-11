@@ -14,6 +14,7 @@ export default {
     Layout
   },
   created() {
+    this.deleteSession();
     this.$http.interceptors.response.use(undefined, function(err) {
       return new Promise(function(resolve, reject) {
         if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
@@ -23,14 +24,30 @@ export default {
       });
     });
   },
+  // beforeDestroy() {
+  //   this.deleteSession();
+  // },
   computed: {
+    isSession: function() {
+      return this.$store.getters.isSession;
+    },
     ...mapGetters({
       STYLE_VARIABLES: "STYLE_VARIABLES",
       role: "role",
       showRole: "showRole",
       isLoggedIn: "isLoggedIn",
-      authStatus: "authStatus"
+      authStatus: "authStatus",
+      isSession: "isSession"
     })
+  },
+  methods: {
+    deleteSession() {
+      if (this.isSession == "false") {
+        window.onbeforeunload = function() {
+          localStorage.removeItem("frog-admin");
+        };
+      }
+    }
   }
 };
 </script>
