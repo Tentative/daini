@@ -2,9 +2,9 @@
   <div class="hello">
     <div>
       <center>
-        <p v-if="isLogged">Welcome to your main page</p>
+        <p v-if="isAuth">Welcome to your main page</p>
         <p v-else>You are not logged in. Please login to view this page</p>
-        <Main v-show="isAuth !=''" />
+        <Main v-show="isAuth != ''" />
         <Login v-show="isAuth.length == 0" />
       </center>
     </div>

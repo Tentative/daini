@@ -124,7 +124,7 @@ const _store = new Vuex.Store({
         params: JSON.stringify(Richiesta)
       }).then(res => {
         const user = JSON.parse(res.data.JsonRisposta);
-        const token = JSON.stringify(JsonWebToken);
+        const token = JSON.stringify(user.JsonWebToken);
         console.log(user);
         console.log(token);
         if (user.IsAutorizzato) {
