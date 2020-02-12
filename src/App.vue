@@ -29,7 +29,7 @@ export default {
   // },
   computed: {
     isSession: function() {
-      return this.$store.getters.isSession;
+      return this.$store.state.login.IsMemorizzaPassword;
     },
     ...mapGetters({
       STYLE_VARIABLES: "STYLE_VARIABLES",
@@ -42,11 +42,13 @@ export default {
   },
   methods: {
     deleteSession() {
-      if (this.isSession == "false") {
-        window.onbeforeunload = function() {
+      window.onunload = function() {
+        if (!localStorage.getItem("keepLogged") == null) {
+          // if (this.isSession == false) {
           localStorage.removeItem("frog-admin");
-        };
-      }
+          // }
+        }
+      };
     }
   }
 };

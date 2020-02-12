@@ -21,16 +21,17 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
 const _store = new Vuex.Store({
   state: {
     status: "",
+    keepLogged: true,
     token: localStorage.getItem("token") || "",
     CodiceRichiesta: "",
     ipUtente: "127.0.0.0",
-    userAgentUtente: "user agent test",
-    url: "app.reevo.io/login",
+    userAgentUtente: navigator.userAgent,
+    url: window.location.href,
     jwtUtente: "",
     login: {
       NomeUtente: "",
       Password: "",
-      IsMemorizzaPassword: null
+      IsMemorizzaPassword: false
     },
     user: {
 
@@ -105,10 +106,10 @@ const _store = new Vuex.Store({
     login({ commit, state }, login) {
       commit("auth_request", login);
       var Richiesta = {
-        // VersioneClient: "0.5.2",
+        VersioneClient: "0.5.2",
         // IndirizzoIP: state.ipUtente,
-        // UserAgent: state.userAgentUtente,
-        // Url: state.url,
+        UserAgent: state.userAgentUtente,
+        Url: state.url,
         JsonWebToken: state.jwtUtente,
         CodiceClient: "reevolacerba2020",
         CodiceRichiesta: state.CodiceRichiesta,
