@@ -2,10 +2,10 @@
   <div class="hello">
     <div>
       <center>
-        <p v-if="isAuth">Welcome to your main page</p>
+        <p v-if="isLoggedIn">Welcome to your main page</p>
         <p v-else>You are not logged in. Please login to view this page</p>
-        <Main v-show="isAuth" />
-        <Login :loading="authStatus" v-show="!isAuth" />
+        <Main v-show="isLoggedIn" />
+        <Login :loading="authStatus" v-show="!isLoggedIn" />
       </center>
     </div>
   </div>
@@ -31,7 +31,8 @@ export default {
       return this.$store.getters.authStatus;
     },
     ...mapGetters({
-      authStatus: "authStatus"
+      authStatus: "authStatus",
+      isLoggedIn: "isLoggedIn"
     })
   }
 };

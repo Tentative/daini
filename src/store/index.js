@@ -3,7 +3,7 @@ import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
 import getters from "./getters";
 import axios from "axios";
-import { queueScheduler } from "rxjs";
+import { queueScheduler, onErrorResumeNext } from "rxjs";
 
 Vue.use(Vuex);
 
@@ -22,13 +22,13 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
 const _store = new Vuex.Store({
   state: {
     status: "",
-    keepLogged: true,
+    keepLogged: null,
     token: localStorage.getItem("token") || "",
     CodiceRichiesta: "",
     ipUtente: "",
     userAgentUtente: navigator.userAgent,
     url: window.location.href,
-    jwtUtente: "",
+    jwtUtente: sessionStorage.getItem("jwtUtente") || "",
     login: {
       NomeUtente: "",
       Password: "",
@@ -44,10 +44,13 @@ const _store = new Vuex.Store({
       state.login = login;
       state.CodiceRichiesta = "Login";
     },
-    auth_success(state, jwtUtente, user) {
+    auth_success(state) {
       state.status = "success";
-      state.jwtUtente = jwtUtente;
-      state.user = user;
+
+    },
+    auth_success_logged(state, jwtUtente) {
+      state.status = "success";
+      state.jwtUtente = "jwtUtente"
     },
     auth_error(state) {
       state.status = "error";
@@ -130,23 +133,26 @@ const _store = new Vuex.Store({
         .then(res => {
           const user = JSON.parse(res.data.JsonRisposta);
           const jwtUtente = user.JsonWebToken;
-          console.log(res);
-          console.log(user);
-          console.log(jwtUtente);
-          if (user.IsAutorizzato) {
-            commit('auth_success', jwtUtente)
+          const logged = state.keepLogged;
+          if (user.IsAutorizzato && !logged) {
+            sessionStorage.setItem('jwtUtente', jwtUtente);
+            commit('auth_success')
             axios.defaults.headers.common['Authorization'] = jwtUtente
           }
-          else {
-            commit('auth_error');
+          else if (user.IsAutorizzato && logged) {
+            commit('auth_success_logged', jwtUtente)
+            axios.defaults.headers.common['Authorization'] = jwtUtente
           }
-
-        });
+          else if (user.IsAutorizzato == "false") {
+            commit('auth_error')
+          }
+        })
     },
     logout({ commit }) {
       return new Promise((resolve, reject) => {
         commit("logout");
         localStorage.removeItem("jwtUtente");
+        sessionStorage.removeItem('jwtUtente');
         delete axios.defaults.headers.common["Authorization"];
         resolve();
       });

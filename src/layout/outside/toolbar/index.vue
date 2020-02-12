@@ -4,7 +4,7 @@
     <div class="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link
-      ><span v-if="isAuth == 'success'"> | <a @click="logout">Logout</a></span>
+      ><span v-if="isAuth"> | <a @click="logout">Logout</a></span>
     </div>
     <div class="spacer"></div>
   </div>
@@ -12,14 +12,18 @@
 
 <script>
 import SidebarActivator from "@/layout/outside/toolbar/sidebarActivator";
+import { mapGetters } from "vuex";
 
 export default {
   name: "toolbar",
   components: { SidebarActivator },
 
   computed: {
+    ...mapGetters({
+      isLoggedIn: "isLoggedIn"
+    }),
     isAuth: function() {
-      return this.$store.getters.authStatus;
+      return this.$store.getters.isLoggedIn;
     }
   },
   methods: {

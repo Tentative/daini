@@ -36,7 +36,7 @@
               >Login</el-button
             >
           </el-form-item>
-          <p class="error" v-show="authStat == 'error'">Unauthorized user</p>
+          <p class="error" v-show="authStatus == 'error'">Unauthorized user</p>
           <el-checkbox v-model="model.IsMemorizzaPassword"
             >Keep logged in</el-checkbox
           >
@@ -57,12 +57,6 @@ export default {
     }
   },
   computed: {
-    isLoggedIn() {
-      return this.$store.getters.isLoggedIn;
-    },
-    authStat: function() {
-      return this.$store.getters.authStatus;
-    },
     // loading: function() {
     //   return this.$store.getters.authStatus;
     // },
