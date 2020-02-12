@@ -15,6 +15,7 @@ export default {
   },
   created() {
     this.deleteSession();
+    this.getAddress();
     this.$http.interceptors.response.use(undefined, function(err) {
       return new Promise(function(resolve, reject) {
         if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
@@ -49,6 +50,17 @@ export default {
           // }
         }
       };
+    },
+    getAddress() {
+      return new Promise(resolve => {
+        this.$axios.get("https://api.ipify.org/?format=json").then(res => {
+          console.log(res);
+          let ipUtente = res.data.ip;
+          console.log(ipUtente);
+          this.$store.commit("get_address", ipUtente);
+          resolve();
+        });
+      });
     }
   }
 };

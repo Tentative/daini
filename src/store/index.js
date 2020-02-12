@@ -18,13 +18,14 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
   return modules;
 }, {});
 
+
 const _store = new Vuex.Store({
   state: {
     status: "",
     keepLogged: true,
     token: localStorage.getItem("token") || "",
     CodiceRichiesta: "",
-    ipUtente: "127.0.0.0",
+    ipUtente: "",
     userAgentUtente: navigator.userAgent,
     url: window.location.href,
     jwtUtente: "",
@@ -61,6 +62,9 @@ const _store = new Vuex.Store({
     keepLogged(state) {
       state.IsMemorizzaPassword = "";
     },
+    get_address(state, ipUtente) {
+      state.ipUtente = ipUtente
+    }
   },
   actions: {
     // login({ commit }, user) {
@@ -107,7 +111,7 @@ const _store = new Vuex.Store({
       commit("auth_request", login);
       var Richiesta = {
         VersioneClient: "0.5.2",
-        // IndirizzoIP: state.ipUtente,
+        IndirizzoIP: state.ipUtente,
         UserAgent: state.userAgentUtente,
         Url: state.url,
         JsonWebToken: state.jwtUtente,
@@ -122,20 +126,22 @@ const _store = new Vuex.Store({
           "Content-Type": "application/x-www-form-urlencoded"
         },
         params: JSON.stringify(Richiesta)
-      }).then(res => {
-        const user = JSON.parse(res.data.JsonRisposta);
-        const jwtUtente = user.JsonWebToken;
-        console.log(user);
-        console.log(jwtUtente);
-        if (user.IsAutorizzato) {
-          commit('auth_success', jwtUtente)
-          axios.defaults.headers.common['Authorization'] = jwtUtente
-        }
-        else {
-          commit('auth_error');
-        }
+      })
+        .then(res => {
+          const user = JSON.parse(res.data.JsonRisposta);
+          const jwtUtente = user.JsonWebToken;
+          console.log(res);
+          console.log(user);
+          console.log(jwtUtente);
+          if (user.IsAutorizzato) {
+            commit('auth_success', jwtUtente)
+            axios.defaults.headers.common['Authorization'] = jwtUtente
+          }
+          else {
+            commit('auth_error');
+          }
 
-      });
+        });
     },
     logout({ commit }) {
       return new Promise((resolve, reject) => {
