@@ -10,5 +10,5 @@ export default {
 	showRole: state => state.authenticated,
 	isLoggedIn: state => !!state.jwtUtente,
 	authStatus: state => state.status,
-	isSession: state => state.login.IsMemorizzaPassword
+	isSession: state => state.login.IsMemorizzaPassword,
 }

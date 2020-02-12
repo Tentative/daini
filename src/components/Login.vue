@@ -28,8 +28,7 @@
           </el-form-item>
           <el-form-item>
             <el-button
-              :disabled="loading"
-              :loading="loading"
+              :loading="authStatus == 'loading'"
               class="login-button"
               type="primary"
               native-type="submit"
@@ -48,23 +47,35 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "login",
+  props: {
+    loading: {
+      type: String,
+      required: true
+    }
+  },
   computed: {
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
     },
     authStat: function() {
       return this.$store.getters.authStatus;
-    }
+    },
+    // loading: function() {
+    //   return this.$store.getters.authStatus;
+    // },
     // loadCheck: function() {
     //   return (status = this.$store.state.status);
     //   if ((status = "loading")) {
-    //     return (this.isLoading = true);
+    //     return (this.loading = true);
     //   } else {
-    //     return (this.isLoading = false);
+    //     return (this.loading = false);
     //   }
-    // }
+    ...mapGetters({
+      authStatus: "authStatus"
+    })
   },
   data() {
     return {
@@ -84,7 +95,7 @@ export default {
         password: "",
         IsMemorizzaPassword: false
       },
-      loading: false,
+      // loading: false,
       rules: {
         username: [
           {
@@ -118,7 +129,6 @@ export default {
       let NomeUtente = this.model.username;
       let Password = this.model.password;
       let IsMemorizzaPassword = this.model.IsMemorizzaPassword;
-      this.loading = true;
       this.$store
         .dispatch("login", {
           NomeUtente,
@@ -127,7 +137,6 @@ export default {
         })
         .then(res => {
           this.$router.push("/");
-          this.loading = false;
         })
         .catch(err => console.log(err));
     }

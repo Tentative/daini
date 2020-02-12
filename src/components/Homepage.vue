@@ -5,7 +5,7 @@
         <p v-if="isAuth">Welcome to your main page</p>
         <p v-else>You are not logged in. Please login to view this page</p>
         <Main v-show="isAuth" />
-        <Login v-show="!isAuth" />
+        <Login :loading="authStatus" v-show="!isAuth" />
       </center>
     </div>
   </div>
@@ -14,14 +14,25 @@
 <script>
 import Main from "@/components/Main";
 import Login from "@/components/Login";
+import { mapGetters } from "vuex";
 export default {
   components: { Main, Login },
   name: "homepage",
-
+  data() {
+    return {
+      loading: false
+    };
+  },
   computed: {
     isAuth: function() {
       return this.$store.getters.isLoggedIn;
-    }
+    },
+    isLoading: function() {
+      return this.$store.getters.authStatus;
+    },
+    ...mapGetters({
+      authStatus: "authStatus"
+    })
   }
 };
 </script>
