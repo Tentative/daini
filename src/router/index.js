@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store'
 import fullRoutes from './fullRoutes'
+import NProgress from 'nprogress';
 
 Vue.use(Router);
 
@@ -70,9 +71,14 @@ _router.beforeEach((to, from, next) => {
 			next()
 			return
 		}
+		NProgress.start()
 		next('/error/403')
 	} else {
 		next()
 	}
 });
+
+_router.afterEach((to, from) => {
+	NProgress.done()
+})
 export default _router;

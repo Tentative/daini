@@ -28,7 +28,7 @@
           </el-form-item>
           <el-form-item>
             <el-button
-              v-if="!loading"
+              :disabled="loading"
               :loading="loading"
               class="login-button"
               type="primary"
@@ -56,10 +56,15 @@ export default {
     },
     authStat: function() {
       return this.$store.getters.authStatus;
-    },
-    created() {
-      console.log(this.$route);
     }
+    // loadCheck: function() {
+    //   return (status = this.$store.state.status);
+    //   if ((status = "loading")) {
+    //     return (this.isLoading = true);
+    //   } else {
+    //     return (this.isLoading = false);
+    //   }
+    // }
   },
   data() {
     return {
@@ -120,7 +125,10 @@ export default {
           Password,
           IsMemorizzaPassword
         })
-        .then(() => this.$router.push("/"))
+        .then(res => {
+          this.$router.push("/");
+          this.loading = false;
+        })
         .catch(err => console.log(err));
     }
   }
