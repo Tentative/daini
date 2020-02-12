@@ -4,6 +4,7 @@ import store from '@/store'
 import fullRoutes from './fullRoutes'
 import NProgress from 'nprogress';
 
+
 Vue.use(Router);
 
 export function initRoutes(routes) {
@@ -68,10 +69,13 @@ const _router = initRoutes(fullRouter);
 _router.beforeEach((to, from, next) => {
 	if (to.matched.some(record => record.meta.requiresAuth)) {
 		if (store.getters.isLoggedIn) {
+			NProgress.start()
 			next()
 			return
 		}
-		NProgress.start()
+		if (to.name) {
+			NProgress.start()
+		}
 		next('/error/403')
 	} else {
 		next()
