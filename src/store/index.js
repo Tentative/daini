@@ -153,11 +153,13 @@ const _store = new Vuex.Store({
           })
       })
     },
-    logout: function () {
-      this.$store.dispatch('logout')
-        .then(() => {
-          this.$router.push('/login')
-        })
+    logout({ commit }) {
+      return new Promise((resolve, reject) => {
+        commit('logout')
+        sessionStorage.removeItem('token')
+        delete axios.defaults.headers.common['Authorization']
+        resolve()
+      })
     }
   },
 
