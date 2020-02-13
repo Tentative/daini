@@ -6,7 +6,7 @@
       <router-link to="/about">About</router-link
       ><span v-show="isLoggedIn">
         |
-        <a @click="logout">Logout</a></span
+        <a @click="logout()">Logout</a></span
       >
       <span v-show="!isLoggedIn">
         | <router-link to="/login">Login</router-link></span

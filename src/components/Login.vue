@@ -50,6 +50,11 @@
 import { mapGetters } from "vuex";
 export default {
   name: "login",
+  computed: {
+    ...mapGetters({
+      authStatus: "authStatus"
+    })
+  },
   // props: {
   //   loading: {
   //     type: String,
@@ -125,11 +130,6 @@ export default {
         })
         .catch(err => console.log(err));
     }
-  },
-  computed: {
-    ...mapGetters({
-      authStatus: "authStatus"
-    })
   }
 };
 </script>

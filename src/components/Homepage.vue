@@ -6,7 +6,7 @@
         <p v-show="!isAuth">
           You are not logged in. Please login to view this page
         </p>
-        <Main v-show="isAuth" />
+        <Main v-show="isLoggedIn" />
       </center>
     </div>
   </div>
@@ -18,23 +18,23 @@ import { mapGetters } from "vuex";
 export default {
   components: { Main },
   name: "homepage",
-  data() {
-    return {
-      loading: false
-    };
-  },
   computed: {
-    isAuth: function() {
-      return this.$store.getters.isLoggedIn;
-    },
-    isLoading: function() {
-      return this.$store.getters.authStatus;
-    },
+    // isAuth: function() {
+    //   return this.$store.getters.isLoggedIn;
+    // },
+    // isLoading: function() {
+    //   return this.$store.getters.authStatus;
+    // },
     ...mapGetters({
       authStatus: "authStatus",
       isLoggedIn: "isLoggedIn"
     })
   }
+  // data() {
+  //   return {
+  //     loading: false
+  //   };
+  // }
 };
 </script>
 

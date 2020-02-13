@@ -49,9 +49,6 @@ const _store = new Vuex.Store({
       state.user = user;
       state.jwtUtente = jwtUtente;
     },
-    set_token(state, jwtUtente) {
-      state.jwtUtente = jwtUtente;
-    },
     temp_auth(state, user) {
       state.status = "success";
       state.user = user;
@@ -139,13 +136,14 @@ const _store = new Vuex.Store({
             const user = JSON.parse(res.data.JsonRisposta)
             const jwtUtente = user.JsonWebToken
             axios.defaults.headers.common['Authorization'] = jwtUtente
-            if (keepLogged == true) {
-              commit('auth_success', jwtUtente, user)
-            }
-            else {
-              sessionStorage.setItem("jwtUtente", jwtUtente)
-              commit('temp_auth', user)
-            }
+            // if (keepLogged == true) {
+            //   commit('auth_success', jwtUtente, user)
+            // }
+            // else {
+            //   sessionStorage.setItem("jwtUtente", jwtUtente)
+            //   commit('temp_auth', user)
+            // }
+            commit('auth_success', jwtUtente, user)
             resolve(res)
           })
           .catch(err => {
@@ -155,15 +153,14 @@ const _store = new Vuex.Store({
           })
       })
     },
-    logout({ commit }) {
-      return new Promise((resolve, reject) => {
-        commit("logout")
-        sessionStorage.removeItem('jwtUtente')
-        delete axios.defaults.headers.common["Authorization"]
-        resolve()
-      });
+    logout: function () {
+      this.$store.dispatch('logout')
+        .then(() => {
+          this.$router.push('/login')
+        })
     }
   },
+
   modules,
   getters,
   plugins: [
