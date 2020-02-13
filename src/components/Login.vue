@@ -56,21 +56,7 @@ export default {
       required: true
     }
   },
-  computed: {
-    // loading: function() {
-    //   return this.$store.getters.authStatus;
-    // },
-    // loadCheck: function() {
-    //   return (status = this.$store.state.status);
-    //   if ((status = "loading")) {
-    //     return (this.loading = true);
-    //   } else {
-    //     return (this.loading = false);
-    //   }
-    ...mapGetters({
-      authStatus: "authStatus"
-    })
-  },
+
   data() {
     return {
       // Richiesta: {
@@ -134,6 +120,11 @@ export default {
         })
         .catch(err => console.log(err));
     }
+  },
+  computed: {
+    ...mapGetters({
+      authStatus: "authStatus"
+    })
   }
 };
 </script>

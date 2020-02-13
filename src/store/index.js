@@ -44,13 +44,15 @@ const _store = new Vuex.Store({
       state.login = login;
       state.CodiceRichiesta = "Login";
     },
-    auth_success(state) {
+    auth_success(state, jwtUtente, user) {
       state.status = "success";
+      state.user = user;
+      state.jwtUtente = jwtUtente;
 
     },
     auth_success_logged(state, jwtUtente) {
       state.status = "success";
-      state.jwtUtente = "jwtUtente"
+      state.jwtUtente = jwtUtente;
     },
     auth_error(state) {
       state.status = "error";
@@ -111,42 +113,40 @@ const _store = new Vuex.Store({
       });
     },
     login({ commit, state }, login) {
-      commit("auth_request", login);
-      var Richiesta = {
-        VersioneClient: "0.5.2",
-        IndirizzoIP: state.ipUtente,
-        UserAgent: state.userAgentUtente,
-        Url: state.url,
-        JsonWebToken: state.jwtUtente,
-        CodiceClient: "reevolacerba2020",
-        CodiceRichiesta: state.CodiceRichiesta,
-        JsonRichiesta: JSON.stringify(login)
-      };
-      axios({
-        url: "/",
-        method: "GET",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        params: JSON.stringify(Richiesta)
-      })
-        .then(res => {
-          const user = JSON.parse(res.data.JsonRisposta);
-          const jwtUtente = user.JsonWebToken;
-          const logged = state.keepLogged;
-          if (user.IsAutorizzato && !logged) {
-            sessionStorage.setItem('jwtUtente', jwtUtente);
-            commit('auth_success')
-            axios.defaults.headers.common['Authorization'] = jwtUtente
-          }
-          else if (user.IsAutorizzato && logged) {
-            commit('auth_success_logged', jwtUtente)
-            axios.defaults.headers.common['Authorization'] = jwtUtente
-          }
-          else if (user.IsAutorizzato == "false") {
-            commit('auth_error')
-          }
+      return new Promise((resolve, reject) => {
+        commit('auth_request')
+        var Richiesta = {
+          VersioneClient: "0.5.2",
+          IndirizzoIP: state.ipUtente,
+          UserAgent: state.userAgentUtente,
+          Url: state.url,
+          JsonWebToken: state.jwtUtente,
+          CodiceClient: "reevolacerba2020",
+          CodiceRichiesta: state.CodiceRichiesta,
+          JsonRichiesta: JSON.stringify(login)
+        };
+        axios({
+          url: "/",
+          method: "GET",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          params: JSON.stringify(Richiesta)
         })
+          .then(res => {
+            const user = JSON.parse(res.data.JsonRisposta)
+            const jwtUtente = user.JsonWebToken
+            sessionStorage.setItem('jwtUtente', jwtUtente)
+            axios.defaults.headers.common['Authorization'] = jwtUtente
+            commit('auth_success', jwtUtente, user)
+            resolve(res)
+          })
+          .catch(err => {
+            commit('auth_error')
+            sessionStorage.removeItem('jwtUtente')
+            reject(err)
+          })
+      })
     },
     logout({ commit }) {
       return new Promise((resolve, reject) => {

@@ -15,7 +15,6 @@ export default {
     Layout
   },
   created() {
-    this.deleteSession();
     this.getAddress();
     this.$http.interceptors.response.use(undefined, function(err) {
       return new Promise(function(resolve, reject) {
@@ -26,9 +25,7 @@ export default {
       });
     });
   },
-  // beforeDestroy() {
-  //   this.deleteSession();
-  // },
+
   computed: {
     isSession: function() {
       return this.$store.state.login.IsMemorizzaPassword;
@@ -43,15 +40,6 @@ export default {
     })
   },
   methods: {
-    deleteSession() {
-      window.onunload = function() {
-        if (!localStorage.getItem("keepLogged") == null) {
-          // if (this.isSession == false) {
-          localStorage.removeItem("frog-admin");
-          // }
-        }
-      };
-    },
     getAddress() {
       return new Promise(resolve => {
         this.$axios.get("https://api.ipify.org/?format=json").then(res => {

@@ -69,18 +69,14 @@ const _router = initRoutes(fullRouter);
 _router.beforeEach((to, from, next) => {
 	if (to.matched.some(record => record.meta.requiresAuth)) {
 		if (store.getters.isLoggedIn) {
-			NProgress.start()
 			next()
 			return
-		}
-		if (to.name) {
-			NProgress.start()
 		}
 		next('/error/403')
 	} else {
 		next()
 	}
-});
+})
 
 _router.afterEach((to, from) => {
 	NProgress.done()

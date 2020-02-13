@@ -4,7 +4,7 @@
     <div class="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link
-      ><span v-if="isAuth"> | <a @click="logout">Logout</a></span>
+      ><span v-if="isLoggedIn"> | <a @click="logout()">Logout</a></span>
     </div>
     <div class="spacer"></div>
   </div>
@@ -38,6 +38,9 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../../style/variables";
+a {
+  cursor: pointer;
+}
 
 #toolbar {
   height: var(--toolbar-height);
