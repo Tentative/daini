@@ -52,9 +52,9 @@ const _store = new Vuex.Store({
     set_token(state, jwtUtente) {
       state.jwtUtente = jwtUtente;
     },
-    auth_success_logged(state, jwtUtente) {
+    temp_auth(state, user) {
       state.status = "success";
-      state.jwtUtente = jwtUtente;
+      state.user = user;
     },
     auth_error(state) {
       state.status = "error";
@@ -114,9 +114,9 @@ const _store = new Vuex.Store({
         JsonRichiesta: JSON.stringify(Richiesta)
       });
     },
-    login({ commit, state }, login) {
+    login({ commit, state }, login, keepLogged) {
       return new Promise((resolve, reject) => {
-        commit('auth_request')
+        commit('auth_request', login)
         var Richiesta = {
           VersioneClient: "0.5.2",
           IndirizzoIP: state.ipUtente,
@@ -137,18 +137,15 @@ const _store = new Vuex.Store({
         })
           .then(res => {
             const user = JSON.parse(res.data.JsonRisposta)
-            const temp = user.JsonWebToken
-            // const keepLogged = login.IsMemorizzaPassword
-            if (state.keepLogged) {
-              jwtUtente = temp
-              axios.defaults.headers.common['Authorization'] = jwtUtente
+            const jwtUtente = user.JsonWebToken
+            axios.defaults.headers.common['Authorization'] = jwtUtente
+            if (keepLogged == true) {
+              commit('auth_success', jwtUtente, user)
             }
             else {
-              sessionStorage.setItem('jwtUtente', temp)
-              axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('jwtUtente')
+              sessionStorage.setItem("jwtUtente", jwtUtente)
+              commit('temp_auth', user)
             }
-
-            commit('auth_success', user)
             resolve(res)
           })
           .catch(err => {
@@ -160,11 +157,10 @@ const _store = new Vuex.Store({
     },
     logout({ commit }) {
       return new Promise((resolve, reject) => {
-        commit("logout");
-        localStorage.removeItem("jwtUtente");
-        sessionStorage.removeItem('jwtUtente');
-        delete axios.defaults.headers.common["Authorization"];
-        resolve();
+        commit("logout")
+        sessionStorage.removeItem('jwtUtente')
+        delete axios.defaults.headers.common["Authorization"]
+        resolve()
       });
     }
   },

@@ -61,7 +61,7 @@ const _router = initRoutes(fullRouter);
 // 		let pathArray = pathToArray(to.path);
 // 		if (!routeEureka(pathArray, fullRouter)) {
 // 			next('/error/404')
-// 		} else if (!routeEureka(pathArray, store.state.permission.permittedRoutes)) {
+// 		} else if (!routeEureka(pathArray, store.getters.isLoggedIn)) {
 // 			next('/error/403')
 // 		}
 // 	}
@@ -78,7 +78,7 @@ _router.beforeEach((to, from, next) => {
 	}
 })
 
-_router.afterEach((to, from) => {
-	NProgress.done()
-})
+// _router.afterEach((to, from) => {
+// 	NProgress.done()
+// })
 export default _router;

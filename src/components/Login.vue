@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <h2 class="logo">Reevo</h2>
+    <center><h2 class="logo">Reevo</h2></center>
     <div class="login">
       <el-card>
         <h2>Login</h2>
@@ -50,12 +50,12 @@
 import { mapGetters } from "vuex";
 export default {
   name: "login",
-  props: {
-    loading: {
-      type: String,
-      required: true
-    }
-  },
+  // props: {
+  //   loading: {
+  //     type: String,
+  //     required: true
+  //   }
+  // },
 
   data() {
     return {
@@ -109,12 +109,17 @@ export default {
       let NomeUtente = this.model.username;
       let Password = this.model.password;
       let IsMemorizzaPassword = this.model.IsMemorizzaPassword;
+      let keepLogged = this.model.IsMemorizzaPassword;
       this.$store
-        .dispatch("login", {
-          NomeUtente,
-          Password,
-          IsMemorizzaPassword
-        })
+        .dispatch(
+          "login",
+          {
+            NomeUtente,
+            Password,
+            IsMemorizzaPassword
+          },
+          keepLogged
+        )
         .then(res => {
           this.$router.push("/");
         })

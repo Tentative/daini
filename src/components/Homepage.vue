@@ -2,10 +2,11 @@
   <div class="hello">
     <div>
       <center>
-        <p v-if="isLoggedIn">Welcome to your main page</p>
-        <p v-else>You are not logged in. Please login to view this page</p>
-        <Main v-show="authStatus == 'success'" />
-        <Login :loading="authStatus" v-show="!isLoggedIn" />
+        <p v-show="isAuth">Welcome to your main page</p>
+        <p v-show="!isAuth">
+          You are not logged in. Please login to view this page
+        </p>
+        <Main v-show="isAuth" />
       </center>
     </div>
   </div>
@@ -13,10 +14,9 @@
 
 <script>
 import Main from "@/components/Main";
-import Login from "@/components/Login";
 import { mapGetters } from "vuex";
 export default {
-  components: { Main, Login },
+  components: { Main },
   name: "homepage",
   data() {
     return {

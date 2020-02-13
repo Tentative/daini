@@ -15,6 +15,15 @@ const fullRoutes = [
 		}
 	},
 	{
+		path: '/login',
+		name: 'login',
+		components: {
+			default: () => import('@/components/Login'),
+			tip: () => import('@/views/common/Home/tip')
+		},
+
+	},
+	{
 		path: '/amz',
 		name: 'amazon',
 		components: {
