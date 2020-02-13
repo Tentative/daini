@@ -22,7 +22,7 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
 const _store = new Vuex.Store({
   state: {
     status: "",
-    keepLogged: null,
+    keepLogged: false,
     token: localStorage.getItem("token") || "",
     CodiceRichiesta: "",
     ipUtente: "",
@@ -48,7 +48,9 @@ const _store = new Vuex.Store({
       state.status = "success";
       state.user = user;
       state.jwtUtente = jwtUtente;
-
+    },
+    set_token(state, jwtUtente) {
+      state.jwtUtente = jwtUtente;
     },
     auth_success_logged(state, jwtUtente) {
       state.status = "success";
@@ -135,10 +137,18 @@ const _store = new Vuex.Store({
         })
           .then(res => {
             const user = JSON.parse(res.data.JsonRisposta)
-            const jwtUtente = user.JsonWebToken
-            sessionStorage.setItem('jwtUtente', jwtUtente)
-            axios.defaults.headers.common['Authorization'] = jwtUtente
-            commit('auth_success', jwtUtente, user)
+            const temp = user.JsonWebToken
+            // const keepLogged = login.IsMemorizzaPassword
+            if (state.keepLogged) {
+              jwtUtente = temp
+              axios.defaults.headers.common['Authorization'] = jwtUtente
+            }
+            else {
+              sessionStorage.setItem('jwtUtente', temp)
+              axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('jwtUtente')
+            }
+
+            commit('auth_success', user)
             resolve(res)
           })
           .catch(err => {

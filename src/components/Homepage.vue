@@ -4,7 +4,7 @@
       <center>
         <p v-if="isLoggedIn">Welcome to your main page</p>
         <p v-else>You are not logged in. Please login to view this page</p>
-        <Main v-show="isLoggedIn" />
+        <Main v-show="authStatus == 'success'" />
         <Login :loading="authStatus" v-show="!isLoggedIn" />
       </center>
     </div>

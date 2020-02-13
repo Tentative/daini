@@ -27,9 +27,6 @@ export default {
   },
 
   computed: {
-    isSession: function() {
-      return this.$store.state.login.IsMemorizzaPassword;
-    },
     ...mapGetters({
       STYLE_VARIABLES: "STYLE_VARIABLES",
       role: "role",
