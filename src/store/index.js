@@ -18,7 +18,6 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
   return modules;
 }, {});
 
-
 const _store = new Vuex.Store({
   state: {
     status: "",
@@ -28,15 +27,13 @@ const _store = new Vuex.Store({
     ipUtente: "",
     userAgentUtente: navigator.userAgent,
     url: window.location.href,
-    jwtUtente: "" || sessionStorage.getItem('jwtUtente'),
+    jwtUtente: sessionStorage.getItem("jwtUtente") || "",
     login: {
       NomeUtente: "",
       Password: "",
       IsMemorizzaPassword: false
     },
-    user: {
-
-    }
+    user: {}
   },
   mutations: {
     auth_request(state, login) {
@@ -49,10 +46,10 @@ const _store = new Vuex.Store({
       state.user = user;
       state.jwtUtente = jwtUtente;
     },
-    temp_auth(state, user) {
+    temp_auth(state, jwtUtente, user) {
       state.status = "success";
-      state.user = user
-
+      state.user = user;
+      sessionStorage.getItem("jwtUtente", jwtUtente);
     },
     auth_error(state) {
       state.status = "error";
@@ -68,7 +65,7 @@ const _store = new Vuex.Store({
       state.IsMemorizzaPassword = "";
     },
     get_address(state, ipUtente) {
-      state.ipUtente = ipUtente
+      state.ipUtente = ipUtente;
     }
   },
   actions: {
@@ -112,9 +109,9 @@ const _store = new Vuex.Store({
         JsonRichiesta: JSON.stringify(Richiesta)
       });
     },
-    login({ commit, state }, login, keepLogged) {
+    login({ commit, state }, login) {
       return new Promise((resolve, reject) => {
-        commit('auth_request', login)
+        commit("auth_request", login);
         var Richiesta = {
           VersioneClient: "0.5.2",
           IndirizzoIP: state.ipUtente,
@@ -134,9 +131,9 @@ const _store = new Vuex.Store({
           params: JSON.stringify(Richiesta)
         })
           .then(res => {
-            const user = JSON.parse(res.data.JsonRisposta)
-            const jwtUtente = user.JsonWebToken
-            axios.defaults.headers.common['Authorization'] = jwtUtente
+            const user = JSON.parse(res.data.JsonRisposta);
+            const jwtUtente = user.JsonWebToken;
+            axios.defaults.headers.common["Authorization"] = jwtUtente;
             // if (keepLogged == true) {
             //   commit('auth_success', jwtUtente, user)
             // }
@@ -145,34 +142,30 @@ const _store = new Vuex.Store({
             //   commit('temp_auth', user)
             // }
             if (state.login.IsMemorizzaPassword == true) {
-              console.log('porcoddio')
-              commit('auth_success', jwtUtente, user)
-              sessionStorage.setItem('jwtUtente', jwtUtente)
-            }
-            else {
-              console.log('porcamadonna')
-              commit('temp_auth', user)
-              sessionStorage.setItem('jwtUtente', jwtUtente)
-
-
+              console.log("porcoddio");
+              commit("auth_success", jwtUtente, user);
+            } else if (state.login.IsMemorizzaPassword == false) {
+              console.log("porcamadonna");
+              sessionStorage.setItem("jwtUtente", jwtUtente);
+              commit("temp_auth", jwtUtente, user);
             }
             // commit('auth_success', jwtUtente, user)
-            resolve(res)
+            resolve(res);
           })
           .catch(err => {
-            commit('auth_error')
-            sessionStorage.removeItem('jwtUtente')
-            reject(err)
-          })
-      })
+            commit("auth_error");
+            sessionStorage.removeItem("jwtUtente");
+            reject(err);
+          });
+      });
     },
     logout({ commit }) {
       return new Promise((resolve, reject) => {
-        commit('logout')
-        sessionStorage.removeItem('jwtUtente')
-        delete axios.defaults.headers.common['Authorization']
-        resolve()
-      })
+        commit("logout");
+        sessionStorage.removeItem("jwtUtente");
+        delete axios.defaults.headers.common["Authorization"];
+        resolve();
+      });
     }
   },
 

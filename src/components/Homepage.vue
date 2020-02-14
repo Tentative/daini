@@ -2,11 +2,11 @@
   <div class="hello">
     <div>
       <center>
-        <p v-show="isLoggedIn">Welcome to your main page</p>
-        <p v-show="!isLoggedIn">
+        <p v-if="porcamadonna || porcoddio">Welcome to your main page</p>
+        <p v-else>
           You are not logged in. Please login to view this page
         </p>
-        <Main v-show="isLoggedIn" />
+        <Main v-if="porcamadonna || porcoddio" />
       </center>
     </div>
   </div>
@@ -27,8 +27,15 @@ export default {
     // },
     ...mapGetters({
       authStatus: "authStatus",
-      isLoggedIn: "isLoggedIn"
-    })
+      isLoggedIn: "isLoggedIn",
+      isTemp: "isTemp"
+    }),
+    porcoddio() {
+      return sessionStorage.getItem("jwtUtente");
+    },
+    porcamadonna() {
+      return this.$store.getters.isLoggedIn;
+    }
   }
   // data() {
   //   return {

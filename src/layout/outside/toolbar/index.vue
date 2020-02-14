@@ -4,13 +4,11 @@
     <div class="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link
-      ><span v-show="isLoggedIn">
+      ><span v-if="porcamadonna || porcoddio">
         |
         <a @click="logout()">Logout</a></span
       >
-      <span v-show="!isLoggedIn">
-        | <router-link to="/login">Login</router-link></span
-      >
+      <span v-else> | <router-link to="/login">Login</router-link></span>
     </div>
     <div class="spacer"></div>
   </div>
@@ -26,10 +24,14 @@ export default {
 
   computed: {
     ...mapGetters({
+      authStatus: "authStatus",
       isLoggedIn: "isLoggedIn",
-      authStatus: "authStatus"
+      isTemp: "isTemp"
     }),
-    isAuth: function() {
+    porcoddio() {
+      return sessionStorage.getItem("jwtUtente");
+    },
+    porcamadonna() {
       return this.$store.getters.isLoggedIn;
     }
   },

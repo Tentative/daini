@@ -8,8 +8,8 @@ export default {
 
   routes: state => state.permission.permittedRoutes,
   showRole: state => state.authenticated,
-  isLoggedIn: state =>
-    state.jwtUtente || sessionStorage.getItem("jwtUtente") != null,
+  isLoggedIn: state => !!state.jwtUtente,
+  isTemp: () => sessionStorage.getItem("jwtUtente"),
   isSession: state => state.login.IsMemorizzaPassword,
   authStatus: state => state.status
 };
