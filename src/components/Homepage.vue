@@ -1,13 +1,13 @@
 <template>
-  <div class="hello">
+  <div v-if="" class="hello">
     <div>
       <center>
-        <p v-if="isTemp || isLoggedIn">Welcome to your main page</p>
+        <p v-if="isLoggedIn">Welcome to your main page</p>
         <p v-else>
           You are not logged in. Please login to view this page
         </p>
-        <Login v-if="!isTemp || !isLoggedIn" />
-        <Main v-else />
+        <Login />
+        <Main />
       </center>
     </div>
   </div>
@@ -29,8 +29,7 @@ export default {
     // },
     ...mapGetters({
       authStatus: "authStatus",
-      isLoggedIn: "isLoggedIn",
-      isTemp: "isTemp"
+      isLoggedIn: "isLoggedIn"
     }),
     isTemp() {
       return this.$store.getters.isTemp;

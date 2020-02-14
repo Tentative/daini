@@ -3,7 +3,7 @@
     <center>
       <p>
         You are not allowed to view this page. Please
-        <router-link to="/login"> login </router-link>
+        <router-link to="/"> login </router-link>
       </p>
     </center>
   </div>

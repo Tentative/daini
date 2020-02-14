@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div v-if="!isLoggedIn" class="main">
     <center><h2 class="logo">Reevo</h2></center>
     <div class="login">
       <el-card>
@@ -52,35 +52,19 @@ export default {
   name: "login",
   computed: {
     ...mapGetters({
-      authStatus: "authStatus"
+      authStatus: "authStatus",
+      isLoggedIn: "isLoggedIn"
     })
   },
-  // props: {
-  //   loading: {
-  //     type: String,
-  //     required: true
-  //   }
-  // },
 
   data() {
     return {
-      // Richiesta: {
-      //   CodiceClient: "reevolacerba2020",
-      //   VersioneClient: "0.0.1",
-      //   IndirizzoIP: "79.7.38.148",
-      //   UserAgent: "useragenttest",
-      //   Url: "https://app.reevo.io/",
-      //   JsonWebToken: null,
-      //   CodiceRichiesta: "Login",
-      //   JsonRichiesta: JSON.stringify(this.Richiesta)
-      // },
       CodiceRichiesta: "Login",
       model: {
         username: "",
         password: "",
         IsMemorizzaPassword: false
       },
-      // loading: false,
       rules: {
         username: [
           {
@@ -114,12 +98,17 @@ export default {
       let NomeUtente = this.model.username;
       let Password = this.model.password;
       let IsMemorizzaPassword = this.model.IsMemorizzaPassword;
+      let keepLogged = this.model.IsMemorizzaPassword;
       this.$store
-        .dispatch("login", {
-          NomeUtente,
-          Password,
-          IsMemorizzaPassword
-        })
+        .dispatch(
+          "login",
+          {
+            NomeUtente,
+            Password,
+            IsMemorizzaPassword
+          },
+          keepLogged
+        )
         .then(res => {
           this.$router.push("/");
         })

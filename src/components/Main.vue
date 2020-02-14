@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-show="isLoggedIn">
     <el-button secondary
       ><router-link to="/amz">
         AMZ
@@ -19,7 +19,14 @@
 
 <script>
 import { mapGetters } from "vuex";
-export default {};
+export default {
+  name: "homepage",
+  computed: {
+    ...mapGetters({
+      isLoggedIn: "isLoggedIn"
+    })
+  }
+};
 </script>
 
 <style></style>

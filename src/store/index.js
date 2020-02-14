@@ -32,7 +32,7 @@ const _store = new Vuex.Store({
     login: {
       NomeUtente: "",
       Password: "",
-      IsMemorizzaPassword: false
+      IsMemorizzaPassword: null
     },
     user: {},
     /* AMZ */
@@ -48,13 +48,18 @@ const _store = new Vuex.Store({
     }
   },
   mutations: {
-    auth_request(state, login) {
+    set_session(state) {
+      state.jwtUtente = "";
+      sessionStorage.removeItem('jwtUtente');
+    },
+    auth_request(state, login, keepLogged) {
       state.status = "loading";
       state.login = login;
       state.CodiceRichiesta = "Login";
+      state.keepLogged = keepLogged;
     },
     amz_request(state, amz) {
-      state.status = "loading";
+      state.status = "";
       state.amz = amz;
       state.CodiceRichiesta = "AMZ";
     },
@@ -63,10 +68,9 @@ const _store = new Vuex.Store({
       state.user = user;
       state.jwtUtente = jwtUtente;
     },
-    temp_auth(state, jwtUtente, user) {
+    temp_auth(state, user) {
       state.status = "success";
       state.user = user;
-      sessionStorage.getItem("jwtUtente", jwtUtente);
     },
     auth_error(state) {
       state.status = "error";
@@ -126,9 +130,9 @@ const _store = new Vuex.Store({
         JsonRichiesta: JSON.stringify(Richiesta)
       });
     },
-    login({ commit, state }, login) {
+    login({ commit, state }, login, keepLogged) {
       return new Promise((resolve, reject) => {
-        commit("auth_request", login);
+        commit("auth_request", login, keepLogged);
         var Richiesta = {
           VersioneClient: "0.6.0",
           IndirizzoIP: state.ipUtente,
@@ -150,32 +154,14 @@ const _store = new Vuex.Store({
           .then(res => {
             const user = JSON.parse(res.data.JsonRisposta);
             const jwtUtente = user.JsonWebToken;
-            // if (keepLogged == true) {
-            //   commit('auth_success', jwtUtente, user)
-            // }
-            // else {
-            //   sessionStorage.setItem("jwtUtente", jwtUtente)
-            //   commit('temp_auth', user)
-            // }
-            if (state.login.IsMemorizzaPassword == true) {
-              axios.defaults.headers.common["Authorization"] = jwtUtente;
-              console.log("resta connesso");
-              commit("auth_success", jwtUtente, user);
-            } else if (state.login.IsMemorizzaPassword == false) {
-              sessionStorage.setItem("jwtUtente", jwtUtente);
-              axios.defaults.headers.common[
-                "Authorization"
-              ] = sessionStorage.getItem("jwtUtente");
-              console.log("disconnesso al prossimo accesso");
-
-              commit("temp_auth", jwtUtente, user);
-            }
-            // commit('auth_success', jwtUtente, user)
+            sessionStorage.setItem('jwtUtente', jwtUtente)
+            axios.defaults.headers.common['Authorization'] = jwtUtente
+            commit('auth_success', jwtUtente, user)
             resolve(res);
           })
           .catch(err => {
             commit("auth_error");
-            sessionStorage.removeItem("jwtUtente");
+            localStorage.removeItem("jwtUtente");
             reject(err);
           });
       });
@@ -202,6 +188,7 @@ const _store = new Vuex.Store({
       return new Promise((resolve, reject) => {
         commit("logout");
         sessionStorage.removeItem("jwtUtente");
+        localStorage.removeItem('jwtUtente');
         delete axios.defaults.headers.common["Authorization"];
         resolve();
       });

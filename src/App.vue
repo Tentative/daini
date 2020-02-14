@@ -16,6 +16,10 @@ export default {
   },
   created() {
     this.getAddress();
+    if (this.$store.getters.keepLogged == false) {
+      this.$store.commit("set_session");
+      console.log("ciao");
+    }
     this.$http.interceptors.response.use(undefined, function(err) {
       return new Promise(function(resolve, reject) {
         if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
@@ -33,7 +37,8 @@ export default {
       showRole: "showRole",
       isLoggedIn: "isLoggedIn",
       authStatus: "authStatus",
-      isSession: "isSession"
+      isSession: "isSession",
+      keepLogged: "keepLogged"
     })
   },
   methods: {
@@ -48,6 +53,12 @@ export default {
         });
       });
     }
+    // keepLogged() {
+    //   console.log("ciao");
+    //   if (this.$store.getters.keepLogged == false) {
+    //     this.$store.commit("set_session");
+    //   }
+    // }
   }
 };
 </script>
