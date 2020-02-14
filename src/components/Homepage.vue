@@ -2,11 +2,12 @@
   <div class="hello">
     <div>
       <center>
-        <p v-if="porcamadonna || porcoddio">Welcome to your main page</p>
+        <p v-if="isTemp || isLoggedIn">Welcome to your main page</p>
         <p v-else>
           You are not logged in. Please login to view this page
         </p>
-        <Main v-if="porcamadonna || porcoddio" />
+        <Login v-if="!isTemp || !isLoggedIn" />
+        <Main v-else />
       </center>
     </div>
   </div>
@@ -14,9 +15,10 @@
 
 <script>
 import Main from "@/components/Main";
+import Login from "@/components/Login";
 import { mapGetters } from "vuex";
 export default {
-  components: { Main },
+  components: { Main, Login },
   name: "homepage",
   computed: {
     // isAuth: function() {
@@ -30,10 +32,10 @@ export default {
       isLoggedIn: "isLoggedIn",
       isTemp: "isTemp"
     }),
-    porcoddio() {
-      return sessionStorage.getItem("jwtUtente");
+    isTemp() {
+      return this.$store.getters.isTemp;
     },
-    porcamadonna() {
+    isLoggedIn() {
       return this.$store.getters.isLoggedIn;
     }
   }

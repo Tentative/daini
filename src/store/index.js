@@ -20,6 +20,7 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
 
 const _store = new Vuex.Store({
   state: {
+    /* LOGIN */
     status: "",
     keepLogged: false,
     token: localStorage.getItem("token") || "",
@@ -33,13 +34,29 @@ const _store = new Vuex.Store({
       Password: "",
       IsMemorizzaPassword: false
     },
-    user: {}
+    user: {},
+    /* AMZ */
+    amz: {
+      NumeroPagina: "1",
+      ItemsPerPagina: "20",
+      Categoria: null,
+      FiltroAlert: "",
+      FiltroInStock: "",
+      FiltroFastTrack: "",
+      FiltroBuyBox: "",
+      FiltroNegativeReviews: ""
+    }
   },
   mutations: {
     auth_request(state, login) {
       state.status = "loading";
       state.login = login;
       state.CodiceRichiesta = "Login";
+    },
+    amz_request(state, amz) {
+      state.status = "loading";
+      state.amz = amz;
+      state.CodiceRichiesta = "AMZ";
     },
     auth_success(state, jwtUtente, user) {
       state.status = "success";
@@ -113,7 +130,7 @@ const _store = new Vuex.Store({
       return new Promise((resolve, reject) => {
         commit("auth_request", login);
         var Richiesta = {
-          VersioneClient: "0.5.2",
+          VersioneClient: "0.6.0",
           IndirizzoIP: state.ipUtente,
           UserAgent: state.userAgentUtente,
           Url: state.url,
@@ -133,7 +150,6 @@ const _store = new Vuex.Store({
           .then(res => {
             const user = JSON.parse(res.data.JsonRisposta);
             const jwtUtente = user.JsonWebToken;
-            axios.defaults.headers.common["Authorization"] = jwtUtente;
             // if (keepLogged == true) {
             //   commit('auth_success', jwtUtente, user)
             // }
@@ -142,11 +158,16 @@ const _store = new Vuex.Store({
             //   commit('temp_auth', user)
             // }
             if (state.login.IsMemorizzaPassword == true) {
-              console.log("porcoddio");
+              axios.defaults.headers.common["Authorization"] = jwtUtente;
+              console.log("resta connesso");
               commit("auth_success", jwtUtente, user);
             } else if (state.login.IsMemorizzaPassword == false) {
-              console.log("porcamadonna");
               sessionStorage.setItem("jwtUtente", jwtUtente);
+              axios.defaults.headers.common[
+                "Authorization"
+              ] = sessionStorage.getItem("jwtUtente");
+              console.log("disconnesso al prossimo accesso");
+
               commit("temp_auth", jwtUtente, user);
             }
             // commit('auth_success', jwtUtente, user)
@@ -157,6 +178,24 @@ const _store = new Vuex.Store({
             sessionStorage.removeItem("jwtUtente");
             reject(err);
           });
+      });
+    },
+    amazon({ state, commit }, amz) {
+      new Promise((resolve, reject) => {
+        commit("amz_request", amz);
+        var Richiesta = {
+          CodiceClient: "reevolacerba2020",
+          CodiceRichiesta: state.CodiceRichiesta,
+          JsonRichiesta: JSON.stringify(amz)
+        };
+        axios({
+          url: "/",
+          method: "GET",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          params: JSON.stringify(Richiesta)
+        });
       });
     },
     logout({ commit }) {

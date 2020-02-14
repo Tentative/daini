@@ -67,7 +67,7 @@ const _router = initRoutes(fullRouter);
 // }));
 _router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (store.getters.isLoggedIn || sessionStorage.getItem("jwtUtente")) {
+    if (store.getters.isLoggedIn || store.getters.isTemp) {
       next();
       return;
     }

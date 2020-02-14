@@ -4,7 +4,7 @@
     <div class="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link
-      ><span v-if="porcamadonna || porcoddio">
+      ><span v-if="isTemp || isLoggedIn">
         |
         <a @click="logout()">Logout</a></span
       >
@@ -28,17 +28,17 @@ export default {
       isLoggedIn: "isLoggedIn",
       isTemp: "isTemp"
     }),
-    porcoddio() {
+    isTemp() {
       return sessionStorage.getItem("jwtUtente");
     },
-    porcamadonna() {
+    isLoggedIn() {
       return this.$store.getters.isLoggedIn;
     }
   },
   methods: {
     logout: function() {
       this.$store.dispatch("logout").then(() => {
-        this.$router.push("/login");
+        this.$router.push("/");
       });
     }
   }
