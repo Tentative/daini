@@ -28,7 +28,7 @@ const _store = new Vuex.Store({
     ipUtente: "",
     userAgentUtente: navigator.userAgent,
     url: window.location.href,
-    jwtUtente: sessionStorage.getItem('jwtUtente') || "",
+    jwtUtente: "" || sessionStorage.getItem('jwtUtente'),
     login: {
       NomeUtente: "",
       Password: "",
@@ -51,7 +51,8 @@ const _store = new Vuex.Store({
     },
     temp_auth(state, user) {
       state.status = "success";
-      state.user = user;
+      state.user = user
+
     },
     auth_error(state) {
       state.status = "error";
@@ -146,10 +147,14 @@ const _store = new Vuex.Store({
             if (state.login.IsMemorizzaPassword == true) {
               console.log('porcoddio')
               commit('auth_success', jwtUtente, user)
+              sessionStorage.setItem('jwtUtente', jwtUtente)
             }
             else {
               console.log('porcamadonna')
+              commit('temp_auth', user)
               sessionStorage.setItem('jwtUtente', jwtUtente)
+
+
             }
             // commit('auth_success', jwtUtente, user)
             resolve(res)
