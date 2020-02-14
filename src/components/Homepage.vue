@@ -2,8 +2,8 @@
   <div class="hello">
     <div>
       <center>
-        <p v-show="isAuth">Welcome to your main page</p>
-        <p v-show="!isAuth">
+        <p v-show="isLoggedIn">Welcome to your main page</p>
+        <p v-show="!isLoggedIn">
           You are not logged in. Please login to view this page
         </p>
         <Main v-show="isLoggedIn" />

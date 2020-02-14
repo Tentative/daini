@@ -28,7 +28,7 @@ const _store = new Vuex.Store({
     ipUtente: "",
     userAgentUtente: navigator.userAgent,
     url: window.location.href,
-    jwtUtente: sessionStorage.getItem("jwtUtente") || "",
+    jwtUtente: sessionStorage.getItem('jwtUtente') || "",
     login: {
       NomeUtente: "",
       Password: "",
@@ -143,7 +143,15 @@ const _store = new Vuex.Store({
             //   sessionStorage.setItem("jwtUtente", jwtUtente)
             //   commit('temp_auth', user)
             // }
-            commit('auth_success', jwtUtente, user)
+            if (state.login.IsMemorizzaPassword == true) {
+              console.log('porcoddio')
+              commit('auth_success', jwtUtente, user)
+            }
+            else {
+              console.log('porcamadonna')
+              sessionStorage.setItem('jwtUtente', jwtUtente)
+            }
+            // commit('auth_success', jwtUtente, user)
             resolve(res)
           })
           .catch(err => {
@@ -156,7 +164,7 @@ const _store = new Vuex.Store({
     logout({ commit }) {
       return new Promise((resolve, reject) => {
         commit('logout')
-        sessionStorage.removeItem('token')
+        sessionStorage.removeItem('jwtUtente')
         delete axios.defaults.headers.common['Authorization']
         resolve()
       })
