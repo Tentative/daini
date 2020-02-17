@@ -169,15 +169,17 @@ const _store = new Vuex.Store({
           .then(res => {
             const user = JSON.parse(res.data.JsonRisposta);
             const jwtUtente = user.JsonWebToken;
-            commit('auth_success', jwtUtente, user)
-            axios.defaults.headers.common['Authorization'] = jwtUtente
-            resolve(res);
+            if (user.IsAutorizzato == true) {
+              commit('auth_success', jwtUtente, user)
+              axios.defaults.headers.common['Authorization'] = jwtUtente
+              resolve(res);
+            }
+            else {
+              commit("auth_error");
+              localStorage.removeItem("jwtUtente");
+            }
           })
-          .catch(err => {
-            commit("auth_error");
-            localStorage.removeItem("jwtUtente");
-            reject(err);
-          });
+
       });
     },
     amazon({ state, commit }, amz) {
