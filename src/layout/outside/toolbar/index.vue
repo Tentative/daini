@@ -52,7 +52,7 @@ a {
   color: #bee9e8;
   &:hover {
     color: #f18f01;
-    transition: all 0.35s;
+    transition: all 0.65s;
   }
 }
 
