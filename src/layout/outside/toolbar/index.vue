@@ -2,7 +2,7 @@
   <div id="toolbar">
     <sidebar-activator />
     <div class="nav">
-      <router-link to="/">Home</router-link> |
+      <router-link to="/"><span v-if="isLoggedIn">Home</span></router-link> |
       <router-link to="/about">About</router-link
       ><span v-if="isLoggedIn">
         |
