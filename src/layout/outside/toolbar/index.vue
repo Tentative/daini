@@ -49,6 +49,11 @@ export default {
 @import "../../../style/variables";
 a {
   cursor: pointer;
+  color: #bee9e8;
+  &:hover {
+    color: #f18f01;
+    transition: all 0.5s;
+  }
 }
 
 #toolbar {

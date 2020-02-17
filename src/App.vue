@@ -67,7 +67,7 @@ export default {
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
   /* color: #2c3e50; */
-  color: #fff;
+  color: #ffffff;
   overflow: hidden;
 }
 
