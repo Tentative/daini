@@ -2,7 +2,7 @@
   <div id="toolbar">
     <sidebar-activator />
     <div class="nav">
-      <router-link to="/"><span v-if="isLoggedIn">Home</span></router-link> |
+      <router-link to="/"><span v-if="isLoggedIn">Home | </span></router-link>
       <router-link to="/about">About</router-link
       ><span v-if="isLoggedIn">
         |
@@ -52,7 +52,7 @@ a {
   color: #bee9e8;
   &:hover {
     color: #f18f01;
-    transition: all 0.5s;
+    transition: all 0.35s;
   }
 }
 
