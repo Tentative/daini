@@ -92,6 +92,7 @@ const _store = new Vuex.Store({
       state.status = "";
       localStorage.removeItem('jwtUtente');
       sessionStorage.removeItem('jwtUtente');
+      window.location.reload();
     },
     request(state) {
       state.CodiceRichiesta = "";
