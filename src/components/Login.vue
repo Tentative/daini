@@ -98,17 +98,12 @@ export default {
       let NomeUtente = this.model.username;
       let Password = this.model.password;
       let IsMemorizzaPassword = this.model.IsMemorizzaPassword;
-      let keepLogged = this.model.IsMemorizzaPassword;
       this.$store
-        .dispatch(
-          "login",
-          {
-            NomeUtente,
-            Password,
-            IsMemorizzaPassword
-          },
-          keepLogged
-        )
+        .dispatch("login", {
+          NomeUtente,
+          Password,
+          IsMemorizzaPassword
+        })
         .then(res => {
           this.$router.push("/");
         })

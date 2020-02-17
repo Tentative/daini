@@ -19,9 +19,9 @@ import Axios from 'axios'
 import locale from 'element-ui/lib/locale/lang/en'
 
 Vue.prototype.$http = Axios;
-const token = localStorage.getItem('token')
-if (token) {
-	Vue.prototype.$http.defaults.headers.common['Authorization'] = token
+const jwtUtente = localStorage.getItem('jwtUtente')
+if (jwtUtente) {
+	Vue.prototype.$http.defaults.headers.common['Authorization'] = jwtUtente
 }
 
 

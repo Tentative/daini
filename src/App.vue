@@ -16,10 +16,7 @@ export default {
   },
   created() {
     this.getAddress();
-    if (this.$store.getters.keepLogged == false) {
-      this.$store.commit("set_session");
-      console.log("ciao");
-    }
+    // this.$store.commit("check_session");
     this.$http.interceptors.response.use(undefined, function(err) {
       return new Promise(function(resolve, reject) {
         if (err.status === 401 && err.config && !err.config.__isRetryRequest) {

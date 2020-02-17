@@ -8,7 +8,7 @@ export default {
 
   routes: state => state.permission.permittedRoutes,
   showRole: state => state.authenticated,
-  isLoggedIn: state => !!state.jwtUtente,
+  isLoggedIn: () => !!localStorage.getItem('jwtUtente') || !!sessionStorage.getItem('jwtUtente'),
   isSession: state => state.login.IsMemorizzaPassword,
   authStatus: state => state.status,
   keepLogged: state => state.keepLogged

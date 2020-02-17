@@ -7,7 +7,7 @@ import { queueScheduler, onErrorResumeNext } from "rxjs";
 
 Vue.use(Vuex);
 
-axios.defaults.baseURL = "https://data.reevo.io";
+axios.defaults.baseURL = "https://cors-anywhere.herokuapp.com/https://data.reevo.io";
 
 const modulesFiles = require.context("./modules", false, /\.js$/);
 
@@ -28,7 +28,7 @@ const _store = new Vuex.Store({
     ipUtente: "",
     userAgentUtente: navigator.userAgent,
     url: window.location.href,
-    jwtUtente: sessionStorage.getItem("jwtUtente") || "",
+    // jwtUtente: localStorage.getItem('jwtUtente') || "",
     login: {
       NomeUtente: "",
       Password: "",
@@ -48,15 +48,19 @@ const _store = new Vuex.Store({
     }
   },
   mutations: {
-    set_session(state) {
-      state.jwtUtente = "";
-      sessionStorage.removeItem('jwtUtente');
+    check_session(state, jwtUtente) {
+      if (state.login.IsMemorizzaPassword == false) {
+        console.log("disconnesso al prossimo accesso");
+        sessionStorage.setItem('jwtUtente', state.jwtUtente);
+        state.jwtUtente = "";
+      }
+
     },
-    auth_request(state, login, keepLogged) {
+    auth_request(state, login) {
       state.status = "loading";
       state.login = login;
       state.CodiceRichiesta = "Login";
-      state.keepLogged = keepLogged;
+
     },
     amz_request(state, amz) {
       state.status = "";
@@ -67,6 +71,14 @@ const _store = new Vuex.Store({
       state.status = "success";
       state.user = user;
       state.jwtUtente = jwtUtente;
+      if (state.login.IsMemorizzaPassword == false) {
+        console.log('disconnesso al prossimo accesso')
+        sessionStorage.setItem('jwtUtente', jwtUtente)
+        state.jwtUtente = "";
+      }
+      else {
+        localStorage.setItem('jwtUtente', jwtUtente)
+      }
     },
     temp_auth(state, user) {
       state.status = "success";
@@ -77,7 +89,8 @@ const _store = new Vuex.Store({
     },
     logout(state) {
       state.status = "";
-      state.jwtUtente = "";
+      localStorage.removeItem('jwtUtente');
+      sessionStorage.removeItem('jwtUtente');
     },
     request(state) {
       state.CodiceRichiesta = "";
@@ -130,11 +143,11 @@ const _store = new Vuex.Store({
         JsonRichiesta: JSON.stringify(Richiesta)
       });
     },
-    login({ commit, state }, login, keepLogged) {
+    login({ commit, state }, login) {
       return new Promise((resolve, reject) => {
-        commit("auth_request", login, keepLogged);
+        commit("auth_request", login);
         var Richiesta = {
-          VersioneClient: "0.6.0",
+          VersioneClient: "0.6.1",
           IndirizzoIP: state.ipUtente,
           UserAgent: state.userAgentUtente,
           Url: state.url,
@@ -147,16 +160,15 @@ const _store = new Vuex.Store({
           url: "/",
           method: "GET",
           headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
+            "Content-Type": "application/json"
           },
           params: JSON.stringify(Richiesta)
         })
           .then(res => {
             const user = JSON.parse(res.data.JsonRisposta);
             const jwtUtente = user.JsonWebToken;
-            sessionStorage.setItem('jwtUtente', jwtUtente)
-            axios.defaults.headers.common['Authorization'] = jwtUtente
             commit('auth_success', jwtUtente, user)
+            axios.defaults.headers.common['Authorization'] = jwtUtente
             resolve(res);
           })
           .catch(err => {
@@ -187,8 +199,6 @@ const _store = new Vuex.Store({
     logout({ commit }) {
       return new Promise((resolve, reject) => {
         commit("logout");
-        sessionStorage.removeItem("jwtUtente");
-        localStorage.removeItem('jwtUtente');
         delete axios.defaults.headers.common["Authorization"];
         resolve();
       });
