@@ -5,7 +5,7 @@ import dynamicRoutes from "./dynamicRoutes";
 const fullRoutes = [
   {
     path: "/",
-    name: "home",
+    name: "Home",
     components: {
       default: () => import("@/components/Homepage"),
       tip: () => import("@/views/common/Home/tip")
@@ -16,7 +16,7 @@ const fullRoutes = [
   },
   {
     path: "/amz",
-    name: "amazon",
+    name: "Amazon",
     components: {
       default: () => import("@/views/common/Amazon/index.vue"),
       tip: () => import("@/views/common/Amazon/tip")
@@ -28,7 +28,7 @@ const fullRoutes = [
   },
   {
     path: "/test",
-    name: "test",
+    name: "Test",
     components: {
       default: () => import("@/views/common/Test/Table/eTable.vue"),
       tip: () => import("@/views/common/Home/tip")
