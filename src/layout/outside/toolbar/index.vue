@@ -8,7 +8,7 @@
         |
         <router-link to="/"><a @click="logout">Logout</a></router-link></span
       >
-      <span v-else> | <router-link to="/login">Login</router-link></span>
+      <span v-else> | <router-link to="/">Login</router-link></span>
     </div>
     <div class="spacer"></div>
   </div>

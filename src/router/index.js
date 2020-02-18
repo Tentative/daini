@@ -73,7 +73,7 @@ _router.beforeEach((to, from, next) => {
       next();
       return;
     }
-    next("/error/403");
+    next("/");
   } else {
     next();
   }
