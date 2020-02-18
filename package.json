@@ -11,6 +11,7 @@
     "npm": "6.13.4"
   },
   "dependencies": {
+    "@fortawesome/vue-fontawesome": "^0.1.9",
     "axios": "^0.19.2",
     "core-js": "^2.6.5",
     "echarts": "^4.2.1",

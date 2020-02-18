@@ -4,7 +4,9 @@ import store from "@/store";
 import fullRoutes from "./fullRoutes";
 import NProgress from "nprogress";
 
-Vue.use(Router);
+Vue.use(Router, {
+  mode: History
+});
 
 export function initRoutes(routes) {
   return new Router({

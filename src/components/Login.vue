@@ -144,7 +144,21 @@ export default {
   font-family: reevoFont;
   src: url("/root/frog-admin/src/assets/font/Sketchalot.ttf");
 }
-
+/* Change Autocomplete styles in Chrome*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: 1px solid green;
+  -webkit-text-fill-color: green;
+  -webkit-box-shadow: 0 0 0px 1000px #000 inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
 .logo {
   font-family: "reevoFont";
   letter-spacing: 3px;
@@ -177,6 +191,10 @@ $teal: rgb(0, 124, 137);
   border-radius: 3px;
   .el-input__icon {
     width: 30px;
+  }
+
+  .el-input__icon:after {
+    width: 20px;
   }
 }
 .login .el-input input {
