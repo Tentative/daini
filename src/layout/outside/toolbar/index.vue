@@ -6,7 +6,7 @@
       <router-link to="/about">About</router-link
       ><span v-if="isLoggedIn">
         |
-        <a @click="logout()">Logout</a></span
+        <router-link to="/"><a @click="logout">Logout</a></router-link></span
       >
       <span v-else> | <router-link to="/login">Login</router-link></span>
     </div>
