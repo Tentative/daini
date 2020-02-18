@@ -5,7 +5,7 @@
     text-color="grey"
     :default-active="$route.path"
     :collapse="!sidebarOpen"
-    active-text-color="#F18F01"
+    active-text-color="#102a43"
     :collapse-transition="false"
   >
     <sidebar-menu-item
