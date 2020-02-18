@@ -17,6 +17,8 @@ import _ from 'lodash'
 import store from './store'
 import Axios from 'axios'
 import locale from 'element-ui/lib/locale/lang/en'
+import '@fortawesome/fontawesome-free/css/all.css'
+import '@fortawesome/fontawesome-free/js/all.js'
 
 Vue.prototype.$http = Axios;
 const jwtUtente = localStorage.getItem('jwtUtente') || sessionStorage.getItem('jwtUtente')

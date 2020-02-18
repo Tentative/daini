@@ -90,7 +90,10 @@ $teal: rgb(0, 124, 137);
   top: 1px;
   border-radius: 3px;
   .el-input__icon {
-    width: 30px;
+    width: 14px;
+    background-color: #ffcf40;
+    color: #102a43;
+    padding: 0 5px 0 5px;
   }
 }
 .login .el-input input {
