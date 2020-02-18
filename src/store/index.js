@@ -48,14 +48,10 @@ const _store = new Vuex.Store({
     }
   },
   mutations: {
-    check_session(state, jwtUtente) {
-      if (state.login.IsMemorizzaPassword == false) {
-        console.log("disconnesso al prossimo accesso");
-        sessionStorage.setItem('jwtUtente', state.jwtUtente);
-        state.jwtUtente = "";
-      }
-
+    check_status(state) {
+      state.status = "";
     },
+
     auth_request(state, login) {
       state.status = "loading";
       state.login = login;
@@ -149,7 +145,7 @@ const _store = new Vuex.Store({
       return new Promise((resolve, reject) => {
         commit("auth_request", login);
         var Richiesta = {
-          VersioneClient: "0.7.1",
+          VersioneClient: "0.7.2",
           IndirizzoIP: state.ipUtente,
           UserAgent: state.userAgentUtente,
           Url: state.url,

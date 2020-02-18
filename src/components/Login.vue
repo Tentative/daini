@@ -168,6 +168,7 @@ $teal: rgb(0, 124, 137);
 .login .el-input__inner:hover {
   border-color: $teal;
 }
+
 .login .el-input__prefix {
   background: rgb(238, 237, 234);
   left: 0;

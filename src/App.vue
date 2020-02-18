@@ -16,6 +16,9 @@ export default {
   },
   created() {
     this.getAddress();
+    if (this.$store.getters.authStatus == "error") {
+      this.$store.commit("check_status");
+    }
     // this.$store.commit("check_session");
     this.$http.interceptors.response.use(undefined, function(err) {
       return new Promise(function(resolve, reject) {
