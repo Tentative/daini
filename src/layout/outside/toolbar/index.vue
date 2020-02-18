@@ -39,6 +39,7 @@ export default {
     logout: function() {
       this.$store.dispatch("logout").then(() => {
         this.$router.push("/");
+        window.location.reload();
       });
     }
   }

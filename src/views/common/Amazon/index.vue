@@ -2,7 +2,7 @@
   <div>
     <el-button @click="reloadTable">Aggiorna con nuovi filtri</el-button>
     <fr-table
-      v-loading="$asyncComputed.commentData.updating"
+      v-loading="$asyncComputed.commentData"
       :data="commentData"
       :columns="columns"
       alignment="center"
@@ -38,7 +38,7 @@ export default {
   },
   asyncComputed: {
     async commentData() {
-      return (await this.$store.dispatch("amazon", this.amz)).data;
+      return await this.$store.dispatch("amazon", this.amz);
     }
   }
 };

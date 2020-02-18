@@ -75,7 +75,7 @@ const _store = new Vuex.Store({
       else {
         localStorage.setItem('jwtUtente', jwtUtente)
       }
-      window.location.reload();
+      window.location.reload(true);
     },
     temp_auth(state, user) {
       state.status = "success";
@@ -88,7 +88,7 @@ const _store = new Vuex.Store({
       state.status = "";
       localStorage.removeItem('jwtUtente');
       sessionStorage.removeItem('jwtUtente');
-      window.location.reload();
+      window.location.reload(true);
     },
     request(state) {
       state.CodiceRichiesta = "";
