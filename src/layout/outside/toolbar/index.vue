@@ -51,7 +51,7 @@ a {
   cursor: pointer;
   color: #bee9e8;
   &:hover {
-    color: #f18f01;
+    color: #ffcf40;
     transition: all 0.65s;
   }
 }

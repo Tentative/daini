@@ -155,7 +155,7 @@ export default {
 
 $teal: rgb(0, 124, 137);
 .el-button--primary {
-  background: $teal;
+  background: #102a43;
   border-color: $teal;
 
   &:hover,
