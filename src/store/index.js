@@ -63,6 +63,9 @@ const _store = new Vuex.Store({
       state.amz = amz;
       state.CodiceRichiesta = "AMZ";
     },
+    amz_confirm(state, amzData) {
+      state.amz = amzData;
+    },
     auth_success(state, jwtUtente, user) {
       state.status = "success";
       state.user = user;
@@ -145,7 +148,7 @@ const _store = new Vuex.Store({
       return new Promise((resolve, reject) => {
         commit("auth_request", login);
         var Richiesta = {
-          VersioneClient: "0.7.7",
+          VersioneClient: "0.7.8",
           IndirizzoIP: state.ipUtente,
           UserAgent: state.userAgentUtente,
           Url: state.url,
@@ -193,7 +196,12 @@ const _store = new Vuex.Store({
             "Content-Type": "application/x-www-form-urlencoded"
           },
           params: JSON.stringify(Richiesta)
-        });
+        })
+          .then(res => {
+            const amz_data = JSON.parse(res.data.JsonRisposta)
+            const amzData = amz_data.JsonRisposta
+            console.log(amzData);
+          });
       });
     },
     logout({ commit }) {

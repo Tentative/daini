@@ -11,5 +11,6 @@ export default {
   isLoggedIn: () => !!localStorage.getItem('jwtUtente') || !!sessionStorage.getItem('jwtUtente'),
   isSession: state => state.login.IsMemorizzaPassword,
   authStatus: state => state.status,
-  keepLogged: state => state.keepLogged
+  keepLogged: state => state.keepLogged,
+  amzData: state => state.amzData
 };
