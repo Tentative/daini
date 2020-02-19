@@ -113,6 +113,11 @@ th,
 td {
   text-align: center;
   padding: 0 20px 0 0;
+  color: #000;
+}
+
+tr {
+  border: 2px solid #000;
 }
 
 td.item {
@@ -120,7 +125,9 @@ td.item {
 }
 
 .amz {
-  border: 1px solid red;
+  border-radius: 5px;
+  background-color: #fff;
+  width: 100%;
 }
 
 .thumb img {
