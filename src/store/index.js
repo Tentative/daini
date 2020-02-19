@@ -7,7 +7,7 @@ import { queueScheduler, onErrorResumeNext } from "rxjs";
 
 Vue.use(Vuex);
 
-axios.defaults.baseURL = "https://cors-anywhere.herokuapp.com/https://data.reevo.io";
+axios.defaults.baseURL = "https://data.reevo.io";
 
 const modulesFiles = require.context("./modules", false, /\.js$/);
 
@@ -145,7 +145,7 @@ const _store = new Vuex.Store({
       return new Promise((resolve, reject) => {
         commit("auth_request", login);
         var Richiesta = {
-          VersioneClient: "0.7.6",
+          VersioneClient: "0.7.7",
           IndirizzoIP: state.ipUtente,
           UserAgent: state.userAgentUtente,
           Url: state.url,

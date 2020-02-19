@@ -36,7 +36,11 @@
               >Login</el-button
             >
           </el-form-item>
-          <p class="error" v-show="authStatus == 'error'">Unauthorized user</p>
+          <p
+            class="error"
+            v-show="authStatus == 'error'"
+            v-html="fieldAlert"
+          ></p>
           <el-checkbox v-model="model.IsMemorizzaPassword"
             >Keep logged in</el-checkbox
           >
@@ -54,7 +58,8 @@ export default {
     ...mapGetters({
       authStatus: "authStatus",
       isLoggedIn: "isLoggedIn"
-    })
+    }),
+    checkFields() {}
   },
 
   data() {
@@ -70,7 +75,7 @@ export default {
           {
             required: true,
             message: "Username is required",
-            trigger: "blur"
+            trigger: "click"
           },
           {
             min: 4,
@@ -90,7 +95,8 @@ export default {
             trigger: "change"
           }
         ]
-      }
+      },
+      fieldAlert: ""
     };
   },
   methods: {
@@ -98,6 +104,12 @@ export default {
       let NomeUtente = this.model.username;
       let Password = this.model.password;
       let IsMemorizzaPassword = this.model.IsMemorizzaPassword;
+      if (NomeUtente == "") {
+        console.log("ciao");
+        this.fieldAlert = "Username is required!";
+      } else if (Password == "") {
+        this.fieldAlert = "Please enter your password";
+      }
       this.$store
         .dispatch("login", {
           NomeUtente,
