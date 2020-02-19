@@ -3,8 +3,9 @@
     <tr>
       <th>#</th>
     </tr>
-    <tr v-for="url in urls">
-      <td class="thumb"><img :src="url" /></td>
+    <tr v-for="item in items">
+      <td class="thumb"><img :src="item.UrlImmagine" /></td>
+      <td class="item">{{ item.NomeItem }}</td>
     </tr>
   </table>
 </template>
@@ -29,7 +30,8 @@ export default {
         FiltroBuyBox: "",
         FiltroNegativeReviews: ""
       },
-      urls: []
+      urls: [],
+      items: []
     };
   },
   methods: {
@@ -54,8 +56,12 @@ export default {
         const image = ListaItems.ListaItems;
         for (const ListaItem in image) {
           console.log(image[ListaItem].UrlImmagine);
+
+          this.items.push(image[ListaItem]);
           this.urls.push(image[ListaItem].UrlImmagine);
         }
+        this.items.splice(-2);
+        console.log(image);
       });
     }
   }
@@ -67,7 +73,7 @@ export default {
 }
 
 .thumb img {
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
 }
 </style>
