@@ -85,14 +85,15 @@ $teal: rgb(0, 124, 137);
 .login .el-input__prefix {
   background: rgb(238, 237, 234);
   left: 0;
+  margin: 1px 1px;
   height: calc(100% - 2px);
-  left: 1px;
-  top: 1px;
   border-radius: 3px;
   .el-input__icon {
     width: 14px;
-    background-color: #ffcf40;
+    border-radius: 3px 0 3px 3px;
+    // background-color: #ffcf40;
     color: #102a43;
+    left: 0;
     padding: 0 5px 0 5px;
   }
 }

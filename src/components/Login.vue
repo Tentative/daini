@@ -75,7 +75,7 @@ export default {
           {
             min: 4,
             message: "Username length should be at least 5 characters",
-            trigger: "blur"
+            trigger: "change"
           }
         ],
         password: [
@@ -87,7 +87,7 @@ export default {
           {
             min: 5,
             message: "Password length should be at least 5 characters",
-            trigger: "blur"
+            trigger: "change"
           }
         ]
       }
