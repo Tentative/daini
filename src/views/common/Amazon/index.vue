@@ -1,53 +1,77 @@
 <template>
-  <table class="amz">
-    <tr>
-      <th></th>
-      <th>Name</th>
-      <th>AMZ Price</th>
-      <th>Discount</th>
-      <th>In stock</th>
-      <th>Rank</th>
-      <th>FT</th>
-      <th>BB</th>
-      <th>Neg. reviews</th>
-    </tr>
-    <tr v-for="item in items">
-      <td class="thumb"><img :src="item.UrlImmagine" /></td>
-      <td class="item">
-        <span>{{ item.NomeItem }} </span>
-      </td>
-      <td class="price">
-        <span>{{ item.PrezzoAMZ }} €</span>
-      </td>
-      <td class="discount">
-        <span v-if="item.Sconto != '0'">{{ item.Sconto }} %</span>
-        <span v-else>/</span>
-      </td>
-      <td class="stock">
-        <span v-if="item.InStockAMZ == 'No'"
-          ><i class="fas fa-times-circle"></i
-        ></span>
-      </td>
-      <td class="rank">
-        <span>{{ item.SalesRank }}</span>
-      </td>
-      <td class="track">
-        <span v-if="item.FastTrack == 'Oggi'">Oggi</span>
-        <span v-if="item.FastTrack == 'Giorno_1'">1 Giorno</span>
-        <span v-if="item.FastTrack == 'Si'"><i class="fas fa-check"></i></span>
-        <span v-if="item.FastTrack == 'No'"
-          ><i class="fas fa-times-circle"></i
-        ></span>
-      </td>
-      <td class="buybox">
-        <span v-if="item.IsBuyBox"><i class="fas fa-check"></i></span>
-        <span v-else><i class="fas fa-times-circle"></i></span>
-      </td>
-      <td class="reviews">
-        <span>{{ item.NegativeReviewsPercentuale }} %</span>
-      </td>
-    </tr>
-  </table>
+  <center>
+    <table class="amz">
+      <tr>
+        <th></th>
+        <th class="name">
+          Name<a @click="sort('NomeItem')"> <i class="fas fa-sort"></i></a>
+        </th>
+        <th class="cost">
+          AMZ Price<a @click="sort('PrezzoAMZ')">
+            <i class="fas fa-sort"></i
+          ></a>
+        </th>
+        <th class="cheap">
+          Discount<a @click="sort('Sconto')"> <i class="fas fa-sort"></i></a>
+        </th>
+        <th class="oos">
+          In stock<a @click="sort('InStockAMZ')"><i class="fas fa-sort"></i></a>
+        </th>
+        <th class="rank">
+          Rank <a @click="sort('SalesRank')"><i class="fas fa-sort"></i></a>
+        </th>
+        <th class="track">
+          FT<a @click="sort('FastTrack')"><i class="fas fa-sort"></i></a>
+        </th>
+        <th class="buybox">
+          BB <a @click="sort('IsBuyBox')"> <i class="fas fa-sort"></i></a>
+        </th>
+        <th class="reviews">
+          Neg. reviews<a @click="sort('NegativeReviewsPercentuale')"
+            ><i class="fas fa-sort"></i
+          ></a>
+        </th>
+      </tr>
+      <tr v-for="item in sortedItems">
+        <td class="thumb"><img :src="item.UrlImmagine" /></td>
+        <td class="item">
+          <span>{{ item.NomeItem }} </span>
+        </td>
+        <td class="price">
+          <span>{{ item.PrezzoAMZ }} €</span>
+        </td>
+        <td class="discount">
+          <span v-if="item.Sconto != '0'">{{ item.Sconto }} %</span>
+          <span v-else>/</span>
+        </td>
+        <td class="stock">
+          <span v-if="item.InStockAMZ == 'No'"
+            ><i class="fas fa-times-circle"></i
+          ></span>
+        </td>
+        <td class="rank">
+          <span>{{ item.SalesRank }}</span>
+        </td>
+        <td class="track">
+          <span v-if="item.FastTrack == 'Oggi'">Oggi</span>
+          <span v-if="item.FastTrack == 'Giorno_1'">1 Giorno</span>
+          <span v-if="item.FastTrack == 'Si'"
+            ><i class="fas fa-check"></i
+          ></span>
+          <span v-if="item.FastTrack == 'No'"
+            ><i class="fas fa-times-circle"></i
+          ></span>
+        </td>
+        <td class="buybox">
+          <span v-if="item.IsBuyBox"><i class="fas fa-check"></i></span>
+          <span v-else><i class="fas fa-times-circle"></i></span>
+        </td>
+        <td class="reviews">
+          <span>{{ item.NegativeReviewsPercentuale }} %</span>
+        </td>
+      </tr>
+    </table>
+  </center>
 </template>
 
 <script>
@@ -71,13 +95,12 @@ export default {
         FiltroNegativeReviews: ""
       },
       urls: [],
-      items: []
+      items: [],
+      currentSort: "NomeItem",
+      currentSortDir: "asc"
     };
   },
   methods: {
-    Tableamz(UrlImmagine) {
-      this.url = UrlImmagine;
-    },
     amz_request() {
       let Richiesta = {
         CodiceRichiesta: "AMZ",
@@ -104,6 +127,24 @@ export default {
         this.items.splice(-2);
         console.log(image);
       });
+    },
+    sort: function(s) {
+      //if s == current sort, reverse
+      if (s === this.currentSort) {
+        this.currentSortDir = this.currentSortDir === "asc" ? "desc" : "asc";
+      }
+      this.currentSort = s;
+    }
+  },
+  computed: {
+    sortedItems: function() {
+      return this.items.sort((a, b) => {
+        let modifier = 1;
+        if (this.currentSortDir === "desc") modifier = -1;
+        if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+        if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+        return 0;
+      });
     }
   }
 };
@@ -116,8 +157,14 @@ td {
   color: #000;
 }
 
-tr {
-  border: 2px solid #000;
+tr:hover {
+  transition: all 0.5s;
+  // opacity: 0.3;
+  background-color: rgba(50, 115, 220, 0.3);
+  & td:first-child {
+    transition: none;
+    background-color: white;
+  }
 }
 
 td.item {
@@ -128,11 +175,30 @@ td.item {
   border-radius: 5px;
   background-color: #fff;
   width: 100%;
+  border-collapse: collapse;
+  & tr:first-child {
+    background-color: #2e86ab;
+    border-radius: 5px;
+    & th {
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.name svg,
+.cost svg,
+.cheap svg,
+.oos svg,
+.rank svg,
+.track svg,
+.buybox svg,
+.reviews svg {
+  padding-left: 10px;
 }
 
 .thumb img {
-  width: 60px;
-  height: 60px;
+  height: 54px;
+  vertical-align: middle;
 }
 .item {
   max-width: 200px;
