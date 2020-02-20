@@ -1,77 +1,85 @@
 <template>
-  <center>
-    <table class="amz">
-      <tr>
-        <th></th>
-        <th class="name">
-          Name<a @click="sort('NomeItem')"> <i class="fas fa-sort"></i></a>
-        </th>
-        <th class="cost">
-          AMZ Price<a @click="sort('PrezzoAMZ')">
-            <i class="fas fa-sort"></i
-          ></a>
-        </th>
-        <th class="cheap">
-          Discount<a @click="sort('Sconto')"> <i class="fas fa-sort"></i></a>
-        </th>
-        <th class="oos">
-          In stock<a @click="sort('InStockAMZ')"><i class="fas fa-sort"></i></a>
-        </th>
-        <th class="rank">
-          Rank <a @click="sort('SalesRank')"><i class="fas fa-sort"></i></a>
-        </th>
-        <th class="track">
-          FT<a @click="sort('FastTrack')"><i class="fas fa-sort"></i></a>
-        </th>
-        <th class="buybox">
-          BB <a @click="sort('IsBuyBox')"> <i class="fas fa-sort"></i></a>
-        </th>
-        <th class="reviews">
-          Neg. reviews<a @click="sort('NegativeReviewsPercentuale')"
-            ><i class="fas fa-sort"></i
-          ></a>
-        </th>
-      </tr>
-      <tr v-for="item in sortedItems">
-        <td class="thumb"><img :src="item.UrlImmagine" /></td>
-        <td class="item">
-          <span>{{ item.NomeItem }} </span>
-        </td>
-        <td class="price">
-          <span>{{ item.PrezzoAMZ }} €</span>
-        </td>
-        <td class="discount">
-          <span v-if="item.Sconto != '0'">{{ item.Sconto }} %</span>
-          <span v-else>/</span>
-        </td>
-        <td class="stock">
-          <span v-if="item.InStockAMZ == 'No'"
-            ><i class="fas fa-times-circle"></i
-          ></span>
-        </td>
-        <td class="rank">
-          <span>{{ item.SalesRank }}</span>
-        </td>
-        <td class="track">
-          <span v-if="item.FastTrack == 'Oggi'">Oggi</span>
-          <span v-if="item.FastTrack == 'Giorno_1'">1 Giorno</span>
-          <span v-if="item.FastTrack == 'Si'"
-            ><i class="fas fa-check"></i
-          ></span>
-          <span v-if="item.FastTrack == 'No'"
-            ><i class="fas fa-times-circle"></i
-          ></span>
-        </td>
-        <td class="buybox">
-          <span v-if="item.IsBuyBox"><i class="fas fa-check"></i></span>
-          <span v-else><i class="fas fa-times-circle"></i></span>
-        </td>
-        <td class="reviews">
-          <span>{{ item.NegativeReviewsPercentuale }} %</span>
-        </td>
-      </tr>
-    </table>
-  </center>
+  <div>
+    <center>
+      <table class="amz">
+        <tr>
+          <th></th>
+          <th class="name">
+            Name<a @click="sort('NomeItem')"> <i class="fas fa-sort"></i></a>
+          </th>
+          <th class="cost">
+            AMZ Price<a @click="sort('PrezzoAMZ')">
+              <i class="fas fa-sort"></i
+            ></a>
+          </th>
+          <th class="cheap">
+            Discount<a @click="sort('Sconto')"> <i class="fas fa-sort"></i></a>
+          </th>
+          <th class="oos">
+            In stock<a @click="sort('InStockAMZ')"
+              ><i class="fas fa-sort"></i
+            ></a>
+          </th>
+          <th class="rank">
+            Rank <a @click="sort('SalesRank')"><i class="fas fa-sort"></i></a>
+          </th>
+          <th class="track">
+            FT<a @click="sort('FastTrack')"><i class="fas fa-sort"></i></a>
+          </th>
+          <th class="buybox">
+            BB <a @click="sort('IsBuyBox')"> <i class="fas fa-sort"></i></a>
+          </th>
+          <th class="reviews">
+            Neg. reviews<a @click="sort('NegativeReviewsPercentuale')"
+              ><i class="fas fa-sort"></i
+            ></a>
+          </th>
+        </tr>
+        <tr v-for="item in sortedItems">
+          <td class="thumb"><img :src="item.UrlImmagine" /></td>
+          <td class="item">
+            <span>{{ item.NomeItem }} </span>
+          </td>
+          <td class="price">
+            <span>{{ item.PrezzoAMZ }} €</span>
+          </td>
+          <td class="discount">
+            <span v-if="item.Sconto != '0'">{{ item.Sconto }} %</span>
+            <span v-else>/</span>
+          </td>
+          <td class="stock">
+            <span v-if="item.InStockAMZ == 'No'"
+              ><i class="fas fa-times-circle"></i
+            ></span>
+          </td>
+          <td class="rank">
+            <span>{{ item.SalesRank }}</span>
+          </td>
+          <td class="track">
+            <span v-if="item.FastTrack == 'Oggi'">Oggi</span>
+            <span v-if="item.FastTrack == 'Giorno_1'">1 Giorno</span>
+            <span v-if="item.FastTrack == 'Si'"
+              ><i class="fas fa-check"></i
+            ></span>
+            <span v-if="item.FastTrack == 'No'"
+              ><i class="fas fa-times-circle"></i
+            ></span>
+          </td>
+          <td class="buybox">
+            <span v-if="item.IsBuyBox"><i class="fas fa-check"></i></span>
+            <span v-else><i class="fas fa-times-circle"></i></span>
+          </td>
+          <td class="reviews">
+            <span>{{ item.NegativeReviewsPercentuale }} %</span>
+          </td>
+        </tr>
+      </table>
+    </center>
+    <div class="pagination">
+      <el-button @click="prevPage()">Prev. page</el-button>
+      <el-button @click="nextPage()">Next page</el-button>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -97,7 +105,9 @@ export default {
       urls: [],
       items: [],
       currentSort: "NomeItem",
-      currentSortDir: "asc"
+      currentSortDir: "asc",
+      pageSize: 3,
+      currentPage: 1
     };
   },
   methods: {
@@ -134,22 +144,39 @@ export default {
         this.currentSortDir = this.currentSortDir === "asc" ? "desc" : "asc";
       }
       this.currentSort = s;
+    },
+    nextPage: function() {
+      if (this.currentPage * this.pageSize < this.items.length)
+        this.currentPage++;
+    },
+    prevPage: function() {
+      if (this.currentPage > 1) this.currentPage--;
     }
   },
   computed: {
     sortedItems: function() {
-      return this.items.sort((a, b) => {
-        let modifier = 1;
-        if (this.currentSortDir === "desc") modifier = -1;
-        if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
-        if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
-        return 0;
-      });
+      return this.items
+        .sort((a, b) => {
+          let modifier = 1;
+          if (this.currentSortDir === "desc") modifier = -1;
+          if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+          if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+          return 0;
+        })
+        .filter((row, index) => {
+          let start = (this.currentPage - 1) * this.pageSize;
+          let end = this.currentPage * this.pageSize;
+          if (index >= start && index < end) return true;
+        });
     }
   }
 };
 </script>
 <style lang="scss">
+.pagination {
+  display: inline-block;
+  margin-top: 20px;
+}
 th,
 td {
   text-align: center;
