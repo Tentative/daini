@@ -8,17 +8,13 @@
             Name<a @click="sort('NomeItem')"> <i class="fas fa-sort"></i></a>
           </th>
           <th class="cost">
-            AMZ Price<a @click="sort('PrezzoAMZ')">
-              <i class="fas fa-sort"></i
-            ></a>
+            AMZ Price<a @click="sort('Prezzo')"> <i class="fas fa-sort"></i></a>
           </th>
           <th class="cheap">
             Discount<a @click="sort('Sconto')"> <i class="fas fa-sort"></i></a>
           </th>
           <th class="oos">
-            In stock<a @click="sort('InStockAMZ')"
-              ><i class="fas fa-sort"></i
-            ></a>
+            In stock<a @click="sort('InStock')"><i class="fas fa-sort"></i></a>
           </th>
           <th class="rank">
             Rank <a @click="sort('SalesRank')"><i class="fas fa-sort"></i></a>
@@ -41,14 +37,14 @@
             <span>{{ item.NomeItem }} </span>
           </td>
           <td class="price">
-            <span>{{ item.PrezzoAMZ }} €</span>
+            <span>{{ item.Prezzo }} €</span>
           </td>
           <td class="discount">
             <span v-if="item.Sconto != '0'">{{ item.Sconto }} %</span>
             <span v-else>/</span>
           </td>
           <td class="stock">
-            <span v-if="item.InStockAMZ == 'No'"
+            <span v-if="item.InStock == 'No'"
               ><i class="fas fa-times-circle"></i
             ></span>
           </td>
@@ -78,6 +74,15 @@
     <div class="pagination">
       <el-button @click="prevPage()">Prev. page</el-button>
       <el-button @click="nextPage()">Next page</el-button>
+      <el-input-number />
+      <el-button @click="goToPage()">Go to</el-button>
+    </div>
+    <div class="items-page">
+      <el-button @click="amz_request()">Apply filter</el-button>
+      <el-input
+        placeholder="Items/Page"
+        v-model="amz.ItemsPerPagina"
+      ></el-input>
     </div>
   </div>
 </template>
@@ -106,7 +111,7 @@ export default {
       items: [],
       currentSort: "NomeItem",
       currentSortDir: "asc",
-      pageSize: 3,
+      ItemsPerPagina: 20,
       currentPage: 1
     };
   },
@@ -146,7 +151,7 @@ export default {
       this.currentSort = s;
     },
     nextPage: function() {
-      if (this.currentPage * this.pageSize < this.items.length)
+      if (this.currentPage * this.amz.ItemsPerPagina < this.items.length)
         this.currentPage++;
     },
     prevPage: function() {
@@ -164,8 +169,8 @@ export default {
           return 0;
         })
         .filter((row, index) => {
-          let start = (this.currentPage - 1) * this.pageSize;
-          let end = this.currentPage * this.pageSize;
+          let start = (this.currentPage - 1) * this.amz.ItemsPerPagina;
+          let end = this.currentPage * this.amz.ItemsPerPagina;
           if (index >= start && index < end) return true;
         });
     }
@@ -176,7 +181,22 @@ export default {
 .pagination {
   display: inline-block;
   margin-top: 20px;
+  & .el-input-number {
+    margin-left: 10px;
+  }
+  & .el-button {
+    margin-left: 10px;
+  }
+  & .el-button:first-child {
+    margin-left: 0;
+  }
 }
+
+.items-page {
+  float: right;
+  margin-top: 20px;
+}
+
 th,
 td {
   text-align: center;
