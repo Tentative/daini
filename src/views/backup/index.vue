@@ -5,31 +5,33 @@
         <tr>
           <th></th>
           <th class="name">
-            Name
+            Name<a @click="sort('NomeItem')"> <i class="fas fa-sort"></i></a>
           </th>
           <th class="cost">
-            AMZ Price
+            AMZ Price<a @click="sort('Prezzo')"> <i class="fas fa-sort"></i></a>
           </th>
           <th class="cheap">
-            Discount
+            Discount<a @click="sort('Sconto')"> <i class="fas fa-sort"></i></a>
           </th>
           <th class="oos">
-            In stock
+            In stock<a @click="sort('InStock')"><i class="fas fa-sort"></i></a>
           </th>
           <th class="rank">
-            Rank
+            Rank <a @click="sort('SalesRank')"><i class="fas fa-sort"></i></a>
           </th>
           <th class="track">
-            FT
+            FT<a @click="sort('FastTrack')"><i class="fas fa-sort"></i></a>
           </th>
           <th class="buybox">
-            BB
+            BB <a @click="sort('IsBuyBox')"> <i class="fas fa-sort"></i></a>
           </th>
           <th class="reviews">
-            Neg. reviews
+            Neg. reviews<a @click="sort('NegativeReviewsPercentuale')"
+              ><i class="fas fa-sort"></i
+            ></a>
           </th>
         </tr>
-        <tr v-for="item in items">
+        <tr v-for="item in sortedItems">
           <td class="thumb"><img :src="item.UrlImmagine" /></td>
           <td class="item">
             <span>{{ item.NomeItem }} </span>
@@ -107,7 +109,7 @@ export default {
       },
       urls: [],
       items: [],
-      currentSort: "",
+      currentSort: "NomeItem",
       currentSortDir: "asc",
       ItemsPerPagina: 20,
       currentPage: 1
@@ -115,7 +117,6 @@ export default {
   },
   methods: {
     amz_request() {
-      this.items = []
       let Richiesta = {
         CodiceRichiesta: "AMZ",
         CodiceClient: "reevolacerba2020",
@@ -136,6 +137,7 @@ export default {
 
           this.items.push(image[ListaItem]);
           this.urls.push(image[ListaItem].UrlImmagine);
+          console.log(image[ListaItem].InStock);
         }
         this.items.splice(-2);
         console.log(image);

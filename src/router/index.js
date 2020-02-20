@@ -5,11 +5,12 @@ import fullRoutes from "./fullRoutes";
 import NProgress from "nprogress";
 
 Vue.use(Router, {
-  mode: History
+  mode: 'history'
 });
 
 export function initRoutes(routes) {
   return new Router({
+    mode: 'history',
     routes: routes
   });
 }
