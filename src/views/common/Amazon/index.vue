@@ -74,20 +74,16 @@
         small
         secondary
         @click="prevPage()"
-        :disabled="currentPage == 1"
+        :disabled="this.amz.NumeroPagina == 1"
         ><i class="fas fa-backward"></i
       ></el-button>
       <el-button
         small
         secondary
         @click="nextPage()"
-        :disabled="currentPage == amzdata.QtaPagine"
+        :disabled="this.amz.NumeroPagina == amzdata.QtaPagine"
         ><i class="fas fa-forward"></i
       ></el-button>
-      <el-button @click="prevPage()">Prev. page</el-button>
-      <el-button @click="nextPage()">Next page</el-button>
-      <el-input-number v-model="amz.NumeroPagina" />
-      <el-button @click="amz_request()">Go to</el-button>
     </div>
     <div class="items-page">
       <el-button @click="amz_request()">Apply filter</el-button>
@@ -160,19 +156,22 @@ export default {
     //   this.currentSort = s;
     // },
     nextPage: function() {
-      // if (this.amz.NumeroPagina * this.amz.ItemsPerPagina < this.items.length)
-      this.amz.NumeroPagina = this.amz.NumeroPagina + 1;
-      console.log(this.amz.NumeroPagina);
+      if (this.amz.NumeroPagina != this.amzdata.QtaPagine) {
+        this.amz.NumeroPagina = this.amz.NumeroPagina + 1;
+        console.log(this.amz.NumeroPagina);
+      }
       this.amz_request();
     },
     prevPage: function() {
-      if (this.amz.NumeroPagina > 1) this.amz.NumeroPagina--;
+      if (this.amz.NumeroPagina != 1) this.amz.NumeroPagina--;
+      console.log(this.amz.NumeroPagina);
+      this.amz_request();
     }
   },
   computed: {
-    pageSize() {
-      return parseInt(this.amz.ItemsPerPagina);
-    }
+    // pageSize() {
+    //   return parseInt(this.amz.ItemsPerPagina);
+    // }
     //   sortedItems: function() {
     //     return this.items
     //       .sort((a, b) => {
