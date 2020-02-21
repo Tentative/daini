@@ -77,6 +77,9 @@
         :disabled="this.amz.NumeroPagina == 1"
         ><i class="fas fa-backward"></i
       ></el-button>
+      <ul class="list-page" v-for="(index, item) in items" :key="item.name">
+        <li>{{ index }}</li>
+      </ul>
       <el-button
         small
         secondary
