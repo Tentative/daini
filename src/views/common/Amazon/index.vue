@@ -70,10 +70,24 @@
       </table>
     </center>
     <div class="pagination">
+      <el-button
+        small
+        secondary
+        @click="prevPage()"
+        :disabled="currentPage == 1"
+        ><i class="fas fa-backward"></i
+      ></el-button>
+      <el-button
+        small
+        secondary
+        @click="nextPage()"
+        :disabled="currentPage == amzdata.QtaPagine"
+        ><i class="fas fa-forward"></i
+      ></el-button>
       <el-button @click="prevPage()">Prev. page</el-button>
       <el-button @click="nextPage()">Next page</el-button>
-      <el-input-number />
-      <el-button @click="goToPage()">Go to</el-button>
+      <el-input-number v-model="amz.NumeroPagina" />
+      <el-button @click="amz_request()">Go to</el-button>
     </div>
     <div class="items-page">
       <el-button @click="amz_request()">Apply filter</el-button>
@@ -96,7 +110,7 @@ export default {
   data() {
     return {
       amz: {
-        NumeroPagina: "1",
+        NumeroPagina: 1,
         ItemsPerPagina: "20",
         Categoria: null,
         FiltroAlert: "",
@@ -105,17 +119,16 @@ export default {
         FiltroBuyBox: "",
         FiltroNegativeReviews: ""
       },
-      urls: [],
       items: [],
+      amzdata: {},
       currentSort: "",
-      currentSortDir: "asc",
-      ItemsPerPagina: 20,
+      currentSortDir: "",
       currentPage: 1
     };
   },
   methods: {
     amz_request() {
-      this.items = []
+      this.items = [];
       let Richiesta = {
         CodiceRichiesta: "AMZ",
         CodiceClient: "reevolacerba2020",
@@ -129,49 +142,52 @@ export default {
         },
         params: JSON.stringify(Richiesta)
       }).then(res => {
-        const ListaItems = JSON.parse(res.data.JsonRisposta);
-        const image = ListaItems.ListaItems;
-        for (const ListaItem in image) {
-          console.log(image[ListaItem].UrlImmagine);
-
-          this.items.push(image[ListaItem]);
-          this.urls.push(image[ListaItem].UrlImmagine);
+        const amzdata = JSON.parse(res.data.JsonRisposta);
+        const lista = amzdata.ListaItems;
+        for (const item of lista) {
+          this.items.push(item);
         }
-        this.items.splice(-2);
-        console.log(image);
+        this.amzdata = amzdata;
+        console.log(lista);
+        // this.items.splice(-2);
       });
     },
-    sort: function(s) {
-      //if s == current sort, reverse
-      if (s === this.currentSort) {
-        this.currentSortDir = this.currentSortDir === "asc" ? "desc" : "asc";
-      }
-      this.currentSort = s;
-    },
+    // // sort: function(s) {
+    // //   //if s == current sort, reverse
+    // //   if (s === this.currentSort) {
+    // //     this.currentSortDir = this.currentSortDir === "asc" ? "desc" : "asc";
+    //   // },
+    //   this.currentSort = s;
+    // },
     nextPage: function() {
-      if (this.currentPage * this.amz.ItemsPerPagina < this.items.length)
-        this.currentPage++;
+      // if (this.amz.NumeroPagina * this.amz.ItemsPerPagina < this.items.length)
+      this.amz.NumeroPagina = this.amz.NumeroPagina + 1;
+      console.log(this.amz.NumeroPagina);
+      this.amz_request();
     },
     prevPage: function() {
-      if (this.currentPage > 1) this.currentPage--;
+      if (this.amz.NumeroPagina > 1) this.amz.NumeroPagina--;
     }
   },
   computed: {
-    sortedItems: function() {
-      return this.items
-        .sort((a, b) => {
-          let modifier = 1;
-          if (this.currentSortDir === "desc") modifier = -1;
-          if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
-          if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
-          return 0;
-        })
-        .filter((row, index) => {
-          let start = (this.currentPage - 1) * this.amz.ItemsPerPagina;
-          let end = this.currentPage * this.amz.ItemsPerPagina;
-          if (index >= start && index < end) return true;
-        });
+    pageSize() {
+      return parseInt(this.amz.ItemsPerPagina);
     }
+    //   sortedItems: function() {
+    //     return this.items
+    //       .sort((a, b) => {
+    //         let modifier = 1;
+    //         if (this.currentSortDir === "desc") modifier = -1;
+    //         if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+    //         if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+    //         return 0;
+    //       })
+    //       .filter((row, index) => {
+    //         let start = (this.currentPage - 1) * this.amz.ItemsPerPagina;
+    //         let end = this.currentPage * this.amz.ItemsPerPagina;
+    //         if (index >= start && index < end) return true;
+    //       });
+    //   }
   }
 };
 </script>
@@ -214,6 +230,10 @@ tr:hover {
 
 td.item {
   text-align: left;
+}
+
+.pagination {
+  display: inline-block;
 }
 
 .amz {
