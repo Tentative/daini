@@ -70,27 +70,31 @@
       </table>
     </center>
     <div class="pagination">
-      <el-button
-        small
-        secondary
-        @click="prevPage()"
-        :disabled="this.amz.NumeroPagina == 1"
-        ><i class="fas fa-backward"></i
-      ></el-button>
-      <ul
-        class="list-page"
-        v-for="item in this.amzdata.QtaPagine"
-        :key="item.name"
-      >
-        <li>{{ item }}</li>
-      </ul>
-      <el-button
-        small
-        secondary
-        @click="nextPage()"
-        :disabled="this.amz.NumeroPagina == amzdata.QtaPagine"
-        ><i class="fas fa-forward"></i
-      ></el-button>
+      <div class="pagination-nav">
+        <el-button
+          small
+          secondary
+          @click="prevPage()"
+          :disabled="this.amz.NumeroPagina == 1"
+          ><i class="fas fa-backward"></i
+        ></el-button>
+        <ul
+          class="list-page"
+          v-for="(index, item) in this.amzdata.QtaPagine"
+          :key="item.name"
+        >
+          <li :class="index == amz.NumeroPagina ? 'active' : ''">
+            {{ item + 1 }}
+          </li>
+        </ul>
+        <el-button
+          small
+          secondary
+          @click="nextPage()"
+          :disabled="this.amz.NumeroPagina == amzdata.QtaPagine"
+          ><i class="fas fa-forward"></i
+        ></el-button>
+      </div>
     </div>
     <div class="items-page">
       <el-button @click="amz_request()">Apply filter</el-button>
@@ -165,6 +169,7 @@ export default {
     nextPage: function() {
       if (this.amz.NumeroPagina != this.amzdata.QtaPagine) {
         this.amz.NumeroPagina = this.amz.NumeroPagina + 1;
+
         console.log(this.amz.NumeroPagina);
       }
       this.amz_request();
@@ -204,6 +209,7 @@ export default {
 .pagination {
   display: inline-block;
   margin-top: 20px;
+  text-align: center;
   & .el-input-number {
     margin-left: 10px;
   }
@@ -213,6 +219,11 @@ export default {
   & .el-button:first-child {
     margin-left: 0;
   }
+}
+
+li.active {
+  background-color: red;
+  padding: 5px 10px;
 }
 
 .items-page {
@@ -252,11 +263,6 @@ tr:hover {
 
 td.item {
   text-align: left;
-}
-
-.pagination {
-  display: inline-block;
-  text-align: center;
 }
 
 .amz {

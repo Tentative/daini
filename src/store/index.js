@@ -56,7 +56,6 @@ const _store = new Vuex.Store({
       state.status = "loading";
       state.login = login;
       state.CodiceRichiesta = "Login";
-
     },
     amz_request(state, amz) {
       state.status = "";
@@ -71,12 +70,11 @@ const _store = new Vuex.Store({
       state.user = user;
       state.jwtUtente = jwtUtente;
       if (state.login.IsMemorizzaPassword == false) {
-        console.log('disconnesso al prossimo accesso')
-        sessionStorage.setItem('jwtUtente', jwtUtente)
+        console.log("disconnesso al prossimo accesso");
+        sessionStorage.setItem("jwtUtente", jwtUtente);
         state.jwtUtente = "";
-      }
-      else {
-        localStorage.setItem('jwtUtente', jwtUtente)
+      } else {
+        localStorage.setItem("jwtUtente", jwtUtente);
       }
       window.location.reload(true);
     },
@@ -89,8 +87,8 @@ const _store = new Vuex.Store({
     },
     logout(state) {
       state.status = "";
-      localStorage.removeItem('jwtUtente');
-      sessionStorage.removeItem('jwtUtente');
+      localStorage.removeItem("jwtUtente");
+      sessionStorage.removeItem("jwtUtente");
       // window.location.reload(true);
     },
     request(state) {
@@ -148,7 +146,7 @@ const _store = new Vuex.Store({
       return new Promise((resolve, reject) => {
         commit("auth_request", login);
         var Richiesta = {
-          VersioneClient: "0.8.6",
+          VersioneClient: "0.8.7",
           IndirizzoIP: state.ipUtente,
           UserAgent: state.userAgentUtente,
           Url: state.url,
@@ -164,21 +162,18 @@ const _store = new Vuex.Store({
             "Content-Type": "application/json"
           },
           params: JSON.stringify(Richiesta)
-        })
-          .then(res => {
-            const user = JSON.parse(res.data.JsonRisposta);
-            const jwtUtente = user.JsonWebToken;
-            if (user.IsAutorizzato == true) {
-              commit('auth_success', jwtUtente, user)
-              axios.defaults.headers.common['Authorization'] = jwtUtente
-              resolve(res);
-            }
-            else {
-              commit("auth_error");
-              localStorage.removeItem("jwtUtente");
-            }
-          })
-
+        }).then(res => {
+          const user = JSON.parse(res.data.JsonRisposta);
+          const jwtUtente = user.JsonWebToken;
+          if (user.IsAutorizzato == true) {
+            commit("auth_success", jwtUtente, user);
+            axios.defaults.headers.common["Authorization"] = jwtUtente;
+            resolve(res);
+          } else {
+            commit("auth_error");
+            localStorage.removeItem("jwtUtente");
+          }
+        });
       });
     },
     amazon({ state, commit }, amz) {
@@ -196,12 +191,11 @@ const _store = new Vuex.Store({
             "Content-Type": "application/x-www-form-urlencoded"
           },
           params: JSON.stringify(Richiesta)
-        })
-          .then(res => {
-            const amz_data = JSON.parse(res.data.JsonRisposta)
-            const amzData = amz_data.JsonRisposta
-            console.log(amzData);
-          });
+        }).then(res => {
+          const amz_data = JSON.parse(res.data.JsonRisposta);
+          const amzData = amz_data.JsonRisposta;
+          console.log(amzData);
+        });
       });
     },
     logout({ commit }) {
