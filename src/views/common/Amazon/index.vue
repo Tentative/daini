@@ -77,8 +77,12 @@
         :disabled="this.amz.NumeroPagina == 1"
         ><i class="fas fa-backward"></i
       ></el-button>
-      <ul class="list-page" v-for="(index, item) in items" :key="item.name">
-        <li>{{ index }}</li>
+      <ul
+        class="list-page"
+        v-for="item in this.amzdata.QtaPagine"
+        :key="item.name"
+      >
+        <li>{{ item }}</li>
       </ul>
       <el-button
         small
@@ -169,6 +173,9 @@ export default {
       if (this.amz.NumeroPagina != 1) this.amz.NumeroPagina--;
       console.log(this.amz.NumeroPagina);
       this.amz_request();
+    },
+    truncateMe() {
+      const lunghezza = this.items.length;
     }
   },
   computed: {
@@ -230,12 +237,26 @@ tr:hover {
   }
 }
 
+.list-page {
+  text-overflow: ellipsis;
+  max-width: 200px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.list-page li {
+  list-style-type: none;
+}
+
 td.item {
   text-align: left;
 }
 
 .pagination {
   display: inline-block;
+  text-align: center;
 }
 
 .amz {

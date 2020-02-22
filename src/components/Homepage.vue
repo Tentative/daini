@@ -1,5 +1,5 @@
 <template>
-  <div v-if="" class="hello">
+  <div class="hello">
     <div>
       <center>
         <p v-if="isLoggedIn">Welcome to your main page</p>
