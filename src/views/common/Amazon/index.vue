@@ -84,7 +84,13 @@
           :key="item.name"
         >
           <li :class="index == amz.NumeroPagina ? 'active' : ''">
-            {{ item + 1 }}
+            <a
+              @click="
+                amz.NumeroPagina = index;
+                amz_request();
+              "
+              >{{ item + 1 }}</a
+            >
           </li>
         </ul>
         <el-button
@@ -94,14 +100,20 @@
           :disabled="this.amz.NumeroPagina == amzdata.QtaPagine"
           ><i class="fas fa-forward"></i
         ></el-button>
+        <div class="jumper">
+          <label for="cars">Items per page</label>
+
+          <select
+            id="cars"
+            v-model="amz.ItemsPerPagina"
+            @change="amz_request()"
+          >
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+        </div>
       </div>
-    </div>
-    <div class="items-page">
-      <el-button @click="amz_request()">Apply filter</el-button>
-      <el-input
-        placeholder="Items/Page"
-        v-model="amz.ItemsPerPagina"
-      ></el-input>
     </div>
   </div>
 </template>
@@ -134,6 +146,9 @@ export default {
     };
   },
   methods: {
+    option_change() {
+      this.amz.ItemsPerPagina = value;
+    },
     amz_request() {
       this.items = [];
       let Richiesta = {
@@ -206,6 +221,13 @@ export default {
 };
 </script>
 <style lang="scss">
+.jumper {
+  margin: 0 10px;
+  display: inline-block;
+  & select {
+    margin: 0 5px;
+  }
+}
 .pagination {
   display: inline-block;
   margin-top: 20px;
@@ -222,15 +244,19 @@ export default {
 }
 
 li.active {
-  background-color: red;
+  background-color: #ffcf40;
   padding: 5px 10px;
+  color: #303133 !important;
+  border-radius: 3px;
 }
 
 .items-page {
   float: right;
   margin-top: 20px;
 }
-
+.list-page a {
+  cursor: pointer;
+}
 th,
 td {
   text-align: center;
@@ -253,12 +279,21 @@ tr:hover {
   max-width: 200px;
   text-overflow: ellipsis;
   white-space: nowrap;
-  overflow: hidden;
+  // overflow: hidden;
   display: inline-block;
+  margin: 0 5px;
+  padding: 0 5px;
 }
 
 .list-page li {
   list-style-type: none;
+  color: #bee9e8;
+}
+
+.truncate {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
 }
 
 td.item {
