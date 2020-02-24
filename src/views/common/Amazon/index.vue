@@ -28,6 +28,38 @@
           <th class="reviews">
             Neg. reviews
           </th>
+          <th class="filter">
+            <el-button type="text" @click="dialogVisible = true"
+              ><i class="fas fa-cog"></i
+            ></el-button>
+            <el-dialog
+              title="Select filters"
+              :visible.sync="dialogVisible"
+              width="30%"
+            >
+              <span>Filter by price alert</span>
+              <el-checkbox v-model="amz.FiltroAlert"></el-checkbox>
+              <span>Filter by stock alert</span>
+              <el-checkbox v-model="amz.FiltroInStock"></el-checkbox>
+              <span>Filter by fast track</span>
+              <el-checkbox v-model="amz.FiltroFastTrack"></el-checkbox>
+              <span>Filter by buy box</span>
+              <el-checkbox v-model="amz.FiltroBuyBox"></el-checkbox>
+              <span>Filter by negative reviews</span>
+              <el-checkbox v-model="amz.FiltroNegativeReviews"></el-checkbox>
+              <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">Cancel</el-button>
+                <el-button
+                  type="primary"
+                  @click="
+                    dialogVisible = false;
+                    amz_request();
+                  "
+                  >Apply Filters</el-button
+                >
+              </span>
+            </el-dialog>
+          </th>
         </tr>
         <tr v-for="item in items">
           <td class="thumb"><img :src="item.UrlImmagine" /></td>
@@ -66,6 +98,7 @@
           <td class="reviews">
             <span>{{ item.NegativeReviewsPercentuale }} %</span>
           </td>
+          <td class="select_filter"></td>
         </tr>
       </table>
     </center>
@@ -132,17 +165,18 @@ export default {
         NumeroPagina: 1,
         ItemsPerPagina: "20",
         Categoria: null,
-        FiltroAlert: "",
-        FiltroInStock: "",
-        FiltroFastTrack: "",
-        FiltroBuyBox: "",
-        FiltroNegativeReviews: ""
+        FiltroAlert: null,
+        FiltroInStock: null,
+        FiltroFastTrack: null,
+        FiltroBuyBox: null,
+        FiltroNegativeReviews: null
       },
       items: [],
       amzdata: {},
       currentSort: "",
       currentSortDir: "",
-      currentPage: 1
+      currentPage: 1,
+      dialogVisible: false
     };
   },
   methods: {
@@ -221,6 +255,12 @@ export default {
 };
 </script>
 <style lang="scss">
+.modaldiddio {
+  opacity: 1;
+}
+.fa-filter {
+  color: red;
+}
 .jumper {
   margin: 0 10px;
   display: inline-block;
