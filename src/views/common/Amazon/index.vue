@@ -338,8 +338,8 @@ th,
 td {
   text-align: center;
   padding: 0 20px 0 0;
-  color: #102a43;
-  border: 1px groove #102a43;
+  color: #606266;
+  border: 1px groove #EBEEF5;
 }
 
 tr:hover {
@@ -389,6 +389,9 @@ td.item {
     border-radius: 5px;
     & th {
       margin-bottom: 20px;
+      margin-bottom: 20px;
+      color: #102a43;
+      font-weight: normal;
     }
   }
 }
