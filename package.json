@@ -20,6 +20,7 @@
     "lodash": "^4.17.15",
     "nprogress": "^0.2.0",
     "rxjs": "^6.5.2",
+    "update": "^0.7.4",
     "vue": "^2.6.10",
     "vue-async-computed": "^3.7.0",
     "vue-clipboard2": "^0.3.0",

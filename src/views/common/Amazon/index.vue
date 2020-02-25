@@ -38,8 +38,8 @@
               width="30%"
               append-to-body
             >
-              <span>Filter by price alert</span>
-              <el-checkbox v-model="amz.FiltroAlert" true-label="Si" false-label="Tutti"></el-checkbox>
+              <center><span>Filter by price</span>
+              <el-checkbox v-model="amz.FiltroAlert" true-label="Si" false-label="Tutti"></el-checkbox></center>
               <span>Filter by stock alert</span>
               <el-checkbox v-model="amz.FiltroInStock"></el-checkbox>
               <span>Filter by fast track</span>
@@ -67,10 +67,10 @@
           <td class="item">
             <span>{{ item.NomeItem }} </span>
           </td>
-          <td class="price">
+          <td :class="item.IsAlert ? 'filtro-alert' : 'price'">
             <span>{{ item.Prezzo }} €</span>
           </td>
-          <td class="discount">
+          <td :class="item.IsAlert ? 'filtro-alert' : 'discount'">
             <span v-if="item.Sconto != '0'">{{ item.Sconto }} %</span>
             <span v-else>/</span>
           </td>
@@ -78,6 +78,8 @@
             <span v-if="item.InStock == 'No'"
               ><i class="fas fa-times-circle"></i
             ></span>
+            <span v-if="item.InStock == 'Limitata'"
+              ><i class="fas fa-exclamation-triangle"></i></span>
           </td>
           <td class="rank">
             <span>{{ item.SalesRank }}</span>
@@ -255,6 +257,9 @@ export default {
 
 </script>
 <style lang="scss">
+.filtro-alert {
+  background-color: rgba(249, 5, 5, 0.3)
+}
 .fa-filter {
   color: red;
 }
@@ -395,12 +400,10 @@ td.item {
 .fa-cog {
   color: #ffcf40;
 }
-
-.el-pagination.is-background .btn-next,
-.el-pagination.is-background .btn-prev,
-.el-pagination.is-background .el-pager li {
-  // background-color: transparent;
+.fas, .fa-exclamation-triangle{
+  color: #F5820F;
 }
+
 
 .el-pagination.is-background .btn-next,
 .el-pagination.is-background .btn-prev,
