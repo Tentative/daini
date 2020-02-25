@@ -102,51 +102,35 @@
         </tr>
       </table>
     </center>
-    <div class="pagination">
-      <div class="pagination-nav">
-        <el-button
-          small
-          secondary
-          @click="prevPage()"
-          :disabled="this.amz.NumeroPagina == 1"
-          ><i class="fas fa-backward"></i
-        ></el-button>
-        <ul
-          class="list-page"
-          v-for="(index, item) in this.amzdata.QtaPagine"
-          :key="item.name"
-        >
-          <li :class="index == amz.NumeroPagina ? 'active' : ''">
-            <a
-              @click="
-                amz.NumeroPagina = index;
-                amz_request();
-              "
-              >{{ item + 1 }}</a
-            >
-          </li>
-        </ul>
-        <el-button
-          small
-          secondary
-          @click="nextPage()"
-          :disabled="this.amz.NumeroPagina == amzdata.QtaPagine"
-          ><i class="fas fa-forward"></i
-        ></el-button>
-        <div class="jumper">
-          <label for="cars">Items per page</label>
+    
+    
 
-          <select
-            id="cars"
-            v-model="amz.ItemsPerPagina"
-            @change="amz_request()"
-          >
-            <option value="20">20</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-          </select>
-        </div>
+      <div class="pagination">
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :page-size="pageSize"
+          :pager-count="5"
+          :page-count="parseInt(amzdata.QtaPagine)"
+          :current-page.sync="amz.NumeroPagina"
+          :total="totalPages"
+          @prev-click="prevPage()"
+          @next-click="nextPage()"
+          @current-change="amz_request()"
+
+        >
+        </el-pagination>
       </div>
+      <div class="jumper">
+        <label for="items">Items per page</label>
+
+        <select id="items" v-model="amz.ItemsPerPagina" @change="amz_request()">
+          <option value="20">20</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
+    </div>
     </div>
   </div>
 </template>
@@ -185,6 +169,8 @@ export default {
     },
     amz_request() {
       this.items = [];
+      this.amzdata = {};
+
       let Richiesta = {
         CodiceRichiesta: "AMZ",
         CodiceClient: "reevolacerba2020",
@@ -220,19 +206,28 @@ export default {
         this.amz.NumeroPagina = this.amz.NumeroPagina + 1;
 
         console.log(this.amz.NumeroPagina);
+
+  
       }
-      this.amz_request();
+       
     },
     prevPage: function() {
       if (this.amz.NumeroPagina != 1) this.amz.NumeroPagina--;
       console.log(this.amz.NumeroPagina);
-      this.amz_request();
+
+
     },
     truncateMe() {
       const lunghezza = this.items.length;
     }
   },
   computed: {
+    totalPages() {
+      return this.amz.QtaPagine;
+    },
+    pageSize() {
+      return parseInt(this.amz.ItemsPerPagina);
+    }
     // pageSize() {
     //   return parseInt(this.amz.ItemsPerPagina);
     // }
@@ -255,9 +250,6 @@ export default {
 };
 </script>
 <style lang="scss">
-.modaldiddio {
-  opacity: 1;
-}
 .fa-filter {
   color: red;
 }
@@ -267,7 +259,10 @@ export default {
   & select {
     margin: 0 5px;
   }
+  vertical-align: sub;
+  text-align: center;
 }
+
 .pagination {
   display: inline-block;
   margin-top: 20px;
@@ -284,8 +279,8 @@ export default {
 }
 
 li.active {
-  background-color: #ffcf40;
-  padding: 5px 10px;
+  background-color: #ffcf40 !important;
+  // padding: 5px 10px;
   color: #303133 !important;
   border-radius: 3px;
 }
@@ -301,7 +296,8 @@ th,
 td {
   text-align: center;
   padding: 0 20px 0 0;
-  color: #000;
+  color: #102a43;
+  border: 1px groove #102a43;
 }
 
 tr:hover {
@@ -338,6 +334,7 @@ tr:hover {
 
 td.item {
   text-align: left;
+  padding-left: 5px;
 }
 
 .amz {
@@ -361,13 +358,16 @@ td.item {
 .rank svg,
 .track svg,
 .buybox svg,
-.reviews svg {
+.reviews svg,
+.filter svg {
   padding-left: 10px;
 }
 
 .thumb img {
   height: 54px;
+  width: 54px;
   vertical-align: middle;
+  float: right;
 }
 .item {
   max-width: 200px;
@@ -385,4 +385,34 @@ td.item {
 .fa-check {
   color: green;
 }
+
+.fas,
+.fa-cog {
+  color: #ffcf40;
+}
+
+.el-pagination.is-background .btn-next,
+.el-pagination.is-background .btn-prev,
+.el-pagination.is-background .el-pager li {
+  // background-color: transparent;
+}
+
+.el-pagination.is-background .btn-next,
+.el-pagination.is-background .btn-prev,
+.el-pagination.is-background .el-pager li:not(:active) {
+  background-color: #f4f4f5;
+}
+
+.el-pagination.is-background .btn-next.disabled,
+.el-pagination.is-background .btn-next:disabled,
+.el-pagination.is-background .btn-prev.disabled,
+.el-pagination.is-background .btn-prev:disabled,
+.el-pagination.is-background .el-pager li.disabled {
+  background-color: #f4f4f5;
+}
+
+// .el-pagination .btn-next .el-icon,
+// .el-pagination .btn-prev .el-icon {
+//   color: #ffcf40;
+// }
 </style>
