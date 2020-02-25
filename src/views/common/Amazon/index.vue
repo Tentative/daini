@@ -36,9 +36,10 @@
               title="Select filters"
               :visible.sync="dialogVisible"
               width="30%"
+              append-to-body
             >
               <span>Filter by price alert</span>
-              <el-checkbox v-model="amz.FiltroAlert"></el-checkbox>
+              <el-checkbox v-model="amz.FiltroAlert" true-label="Si" false-label="Tutti"></el-checkbox>
               <span>Filter by stock alert</span>
               <el-checkbox v-model="amz.FiltroInStock"></el-checkbox>
               <span>Filter by fast track</span>
@@ -149,7 +150,7 @@ export default {
         NumeroPagina: 1,
         ItemsPerPagina: "20",
         Categoria: null,
-        FiltroAlert: null,
+        FiltroAlert: "Tutti",
         FiltroInStock: null,
         FiltroFastTrack: null,
         FiltroBuyBox: null,
@@ -227,7 +228,12 @@ export default {
     },
     pageSize() {
       return parseInt(this.amz.ItemsPerPagina);
-    }
+    },
+
+       
+     }
+   };
+
     // pageSize() {
     //   return parseInt(this.amz.ItemsPerPagina);
     // }
@@ -246,8 +252,7 @@ export default {
     //         if (index >= start && index < end) return true;
     //       });
     //   }
-  }
-};
+
 </script>
 <style lang="scss">
 .fa-filter {
