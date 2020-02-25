@@ -33,21 +33,33 @@
               ><i class="fas fa-cog"></i
             ></el-button>
             <el-dialog
-              title="Select filters"
+            class="filter-check"
+              title="Select filters by:"
               :visible.sync="dialogVisible"
-              width="30%"
+              width="40%"
               append-to-body
             >
-              <center><span>Filter by price</span>
-              <el-checkbox v-model="amz.FiltroAlert" true-label="Si" false-label="Tutti"></el-checkbox></center>
-              <span>Filter by stock alert</span>
-              <el-checkbox v-model="amz.FiltroInStock"></el-checkbox>
-              <span>Filter by fast track</span>
-              <el-checkbox v-model="amz.FiltroFastTrack"></el-checkbox>
-              <span>Filter by buy box</span>
-              <el-checkbox v-model="amz.FiltroBuyBox"></el-checkbox>
-              <span>Filter by negative reviews</span>
-              <el-checkbox v-model="amz.FiltroNegativeReviews"></el-checkbox>
+            <div class="column">
+              <h3>Price:</h3>
+              <span v-html="priceMessage"></span>
+              <el-checkbox v-model="amz.FiltroAlert" true-label="Si" false-label="Tutti"></el-checkbox>
+              <h3>Stock:</h3>
+              <span v-html="stockMessage"></span>
+              <el-checkbox v-model="amz.FiltroInStock" true-label="No" false-label="Tutti"></el-checkbox>
+              </div>
+              <div class="column">
+              <h3>Fast Track:</h3>
+              <span v-html="ftMessage"></span>
+              <el-checkbox v-model="amz.FiltroFastTrack" true-label="No" false-label="Tutti"></el-checkbox>
+              <h3>Buy Box:</h3>
+              <span v-html="bbMessage"></span>
+              <el-checkbox v-model="amz.FiltroBuyBox" true-label="No" false-label="Tutti"></el-checkbox>
+              </div>
+              <div class="column">
+              <h3>Negative Reviews:</h3>
+              <span v-html="nrMessage"></span>
+              <el-checkbox v-model="amz.FiltroNegativeReviews" true-label="SoloNegative" false-label="Tutti"></el-checkbox>
+              </div>
               <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">Cancel</el-button>
                 <el-button
@@ -153,10 +165,10 @@ export default {
         ItemsPerPagina: "20",
         Categoria: null,
         FiltroAlert: "Tutti",
-        FiltroInStock: null,
-        FiltroFastTrack: null,
-        FiltroBuyBox: null,
-        FiltroNegativeReviews: null
+        FiltroInStock: "Tutti",
+        FiltroFastTrack: "Tutti",
+        FiltroBuyBox: "Tutti",
+        FiltroNegativeReviews: "Tutti"
       },
       items: [],
       amzdata: {},
@@ -231,9 +243,22 @@ export default {
     pageSize() {
       return parseInt(this.amz.ItemsPerPagina);
     },
-
-       
-     }
+    priceMessage() {
+      return this.amz.FiltroAlert == 'Tutti' ? 'Show all items' : 'Show only items with price alert'
+    },
+    stockMessage() {
+      return this.amz.FiltroInStock == 'Tutti' ? 'Show all items' : 'Show out of stock items'
+    },
+    ftMessage() {
+      return this.amz.FiltroFastTrack == 'Tutti' ? 'Show all items' : 'Show items without fast track'
+    },
+    bbMessage() {
+      return this.amz.FiltroBuyBox == 'Tutti' ? 'Show all items' : 'Show items without BuyBox'
+    },
+    nrMessage() {
+      return this.amz.FiltroNegativeReviews == 'Tutti' ? 'Show all items' : 'Only show articles with negative reviews (>20%)'
+    }
+  }
    };
 
     // pageSize() {
@@ -257,6 +282,13 @@ export default {
 
 </script>
 <style lang="scss">
+.column {
+  width: 33.3333%;
+  display: inline-block;
+}
+.filter-check span {
+  padding-right: 5px;
+}
 .filtro-alert {
   background-color: rgba(249, 5, 5, 0.3)
 }

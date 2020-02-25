@@ -146,7 +146,7 @@ const _store = new Vuex.Store({
       return new Promise((resolve, reject) => {
         commit("auth_request", login);
         var Richiesta = {
-          VersioneClient: "0.9.2",
+          VersioneClient: "0.9.3",
           IndirizzoIP: state.ipUtente,
           UserAgent: state.userAgentUtente,
           Url: state.url,
